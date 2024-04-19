@@ -1,5 +1,6 @@
 package com.hozzi.order.entity;
 
+import com.hozzi.order.enumerate.State;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,7 +18,9 @@ public class Wallet {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long walletId;
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    private State state;
     @Column(nullable = false)
-    private LocalDateTime updatedAt;
+    private LocalDateTime createAt;
+    @Column(nullable = false)
+    private LocalDateTime updateAt;
 }

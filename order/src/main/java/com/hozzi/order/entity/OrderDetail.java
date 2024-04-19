@@ -17,7 +17,7 @@ public class OrderDetail {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long orderDetailId;
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createAt;
     @Column(nullable = false)
-    private LocalDateTime updatedAt;
+    private LocalDateTime updateAt;
 }

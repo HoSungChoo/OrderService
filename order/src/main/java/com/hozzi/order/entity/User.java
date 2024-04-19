@@ -31,7 +31,7 @@ public class User {
     @Column(nullable = false)
     private Long point;
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createAt;
     @Column(nullable = false)
-    private LocalDateTime updatedAt;
+    private LocalDateTime updateAt;
 }

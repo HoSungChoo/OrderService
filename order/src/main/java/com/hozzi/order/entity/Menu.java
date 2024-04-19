@@ -1,5 +1,6 @@
 package com.hozzi.order.entity;
 
+import com.hozzi.order.enumerate.State;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,7 +18,15 @@ public class Menu {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long menuId;
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    private String menuName;
     @Column(nullable = false)
-    private LocalDateTime updatedAt;
+    private Long menuPrice;
+    @Column(nullable = false)
+    private State state;
+    @Column(nullable = false)
+    private LocalDateTime createAt;
+    @Column(nullable = false)
+    private LocalDateTime updateAt;
+    @Column(nullable = false)
+    private LocalDateTime cancelAt;
 }

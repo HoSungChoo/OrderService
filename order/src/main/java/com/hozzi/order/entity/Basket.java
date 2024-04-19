@@ -17,7 +17,7 @@ public class Basket {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long basketId;
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createAt;
     @Column(nullable = false)
-    private LocalDateTime updatedAt;
+    private LocalDateTime updateAt;
 }

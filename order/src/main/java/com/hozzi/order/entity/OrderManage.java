@@ -1,5 +1,6 @@
 package com.hozzi.order.entity;
 
+import com.hozzi.order.enumerate.OmType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,7 +18,9 @@ public class OrderManage {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long orderManageId;
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    private OmType omType;
     @Column(nullable = false)
-    private LocalDateTime updatedAt;
+    private LocalDateTime createAt;
+    @Column(nullable = false)
+    private LocalDateTime updateAt;
 }

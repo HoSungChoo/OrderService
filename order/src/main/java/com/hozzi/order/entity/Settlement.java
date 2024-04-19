@@ -1,5 +1,6 @@
 package com.hozzi.order.entity;
 
+import com.hozzi.order.enumerate.SettlementType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,7 +18,11 @@ public class Settlement {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long settlementId;
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    private Long balance;
     @Column(nullable = false)
-    private LocalDateTime updatedAt;
+    private SettlementType settlementType;
+    @Column(nullable = false)
+    private LocalDateTime createAt;
+    @Column(nullable = false)
+    private LocalDateTime updateAt;
 }

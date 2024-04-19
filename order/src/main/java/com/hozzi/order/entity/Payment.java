@@ -1,5 +1,6 @@
 package com.hozzi.order.entity;
 
+import com.hozzi.order.enumerate.State;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,7 +18,17 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long paymentId;
     @Column(nullable = false)
-    private LocalDateTime createdAt;
+    private String paymentName;
     @Column(nullable = false)
-    private LocalDateTime updatedAt;
+    private State state;
+    @Column(nullable = false)
+    private float discountRate;
+    @Column(nullable = false)
+    private float rewardRate;
+    @Column(nullable = false)
+    private LocalDateTime createAt;
+    @Column(nullable = false)
+    private LocalDateTime updateAt;
+    @Column(nullable = false)
+    private LocalDateTime cancelAt;
 }
