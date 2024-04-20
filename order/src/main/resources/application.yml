@@ -2,10 +2,10 @@ spring:
   application:
     name: "order"
   datasource:
-    driver-class-name: "oracle.jdbc.OracleDriver"
-    username: "root"
-    url: "jdbc:oracle:thin:@localhost:1521:xe"
-    password: "root"
+    driver-class-name: ${yml.file.datasource.driver}
+    username: ${yml.file.datasource.username}
+    url: ${yml.file.datasource.url}
+    password: ${yml.file.datasource.password}
   jpa:
     properties:
       hibernate:
