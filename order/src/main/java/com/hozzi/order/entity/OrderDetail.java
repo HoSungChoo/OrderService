@@ -20,4 +20,11 @@ public class OrderDetail {
     private LocalDateTime createAt;
     @Column(nullable = false)
     private LocalDateTime updateAt;
+    // relation
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    private Order order;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "menu_id")
+    private Menu menu;
 }

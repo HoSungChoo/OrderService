@@ -29,4 +29,8 @@ public class Menu {
     private LocalDateTime updateAt;
     @Column(nullable = false)
     private LocalDateTime cancelAt;
+    // relation
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id")
+    private Store store;
 }

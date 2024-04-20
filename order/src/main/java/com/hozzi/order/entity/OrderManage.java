@@ -23,4 +23,8 @@ public class OrderManage {
     private LocalDateTime createAt;
     @Column(nullable = false)
     private LocalDateTime updateAt;
+    // relation
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    private Order order;
 }

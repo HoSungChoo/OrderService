@@ -23,4 +23,8 @@ public class Store {
     private LocalDateTime createAt;
     @Column(nullable = false)
     private LocalDateTime updateAt;
+    // relation
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 }

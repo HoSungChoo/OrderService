@@ -23,4 +23,9 @@ public class Wallet {
     private LocalDateTime createAt;
     @Column(nullable = false)
     private LocalDateTime updateAt;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "payment_id")
+    private Payment payment;
 }
