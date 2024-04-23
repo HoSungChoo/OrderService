@@ -18,6 +18,8 @@ public class Basket {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long basketId;
     @Column(nullable = false)
+    private Long amount;
+    @Column(nullable = false)
     private LocalDateTime createAt;
     @Column(nullable = false)
     private LocalDateTime updateAt;

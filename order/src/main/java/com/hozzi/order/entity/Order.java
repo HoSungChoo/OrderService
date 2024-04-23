@@ -16,10 +16,13 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long orderId;
+    @Column(nullable = false)
+    private Long balance;
+    @Column(nullable = false)
+    private Long reward;
+    @Column(nullable = false)
+    private LocalDateTime createAt;
     // relation
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "store_id")
-    private Store store;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "wallet_id")
     private Wallet wallet;

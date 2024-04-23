@@ -1,5 +1,6 @@
 package com.hozzi.order.entity;
 
+import com.hozzi.order.enumerate.State;
 import com.hozzi.order.enumerate.StoreType;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,7 +19,11 @@ public class Store {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long storeId;
     @Column(nullable = false)
+    private String storeName;
+    @Column(nullable = false)
     private StoreType storeType;
+    @Column(nullable = false)
+    private State state;
     @Column(nullable = false)
     private LocalDateTime createAt;
     @Column(nullable = false)

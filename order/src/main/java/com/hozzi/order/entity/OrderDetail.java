@@ -17,6 +17,8 @@ public class OrderDetail {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long orderDetailId;
     @Column(nullable = false)
+    private Integer amount;
+    @Column(nullable = false)
     private LocalDateTime createAt;
     @Column(nullable = false)
     private LocalDateTime updateAt;
@@ -27,4 +29,7 @@ public class OrderDetail {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "menu_id")
     private Menu menu;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id")
+    private Store store;
 }
