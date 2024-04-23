@@ -1,5 +1,6 @@
-package com.hozzi.order.entity;
+package com.hozzi.order.domain.store.entity;
 
+import com.hozzi.order.global.enumerate.State;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,24 +12,24 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(schema = "root", name = "order_detail")
-public class OrderDetail {
+@Table(schema = "root", name = "menu")
+public class Menu {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long orderDetailId;
+    private Long menuId;
     @Column(nullable = false)
-    private Integer amount;
+    private String menuName;
+    @Column(nullable = false)
+    private Long menuPrice;
+    @Column(nullable = false)
+    private State state;
     @Column(nullable = false)
     private LocalDateTime createAt;
     @Column(nullable = false)
     private LocalDateTime updateAt;
+    @Column(nullable = false)
+    private LocalDateTime cancelAt;
     // relation
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
-    private Order order;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "menu_id")
-    private Menu menu;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")
     private Store store;

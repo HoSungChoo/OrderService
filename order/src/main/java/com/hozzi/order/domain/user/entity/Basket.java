@@ -1,10 +1,11 @@
-package com.hozzi.order.entity;
+package com.hozzi.order.domain.user.entity;
 
+import com.hozzi.order.domain.store.entity.Menu;
+import com.hozzi.order.domain.store.entity.Store;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter

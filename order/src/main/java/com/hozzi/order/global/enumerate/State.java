@@ -1,4 +1,4 @@
-package com.hozzi.order.enumerate;
+package com.hozzi.order.global.enumerate;
 
 public enum State {
     ENROLL, CANCEL

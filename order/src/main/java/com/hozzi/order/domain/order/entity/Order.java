@@ -1,5 +1,6 @@
-package com.hozzi.order.entity;
+package com.hozzi.order.domain.order.entity;
 
+import com.hozzi.order.domain.user.entity.Wallet;
 import jakarta.persistence.*;
 import lombok.*;
 

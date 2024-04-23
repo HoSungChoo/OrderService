@@ -1,6 +1,7 @@
-package com.hozzi.order.entity;
+package com.hozzi.order.domain.order.entity;
 
-import com.hozzi.order.enumerate.State;
+import com.hozzi.order.domain.user.entity.User;
+import com.hozzi.order.domain.order.enumerate.OmType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,20 +13,22 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(schema = "root", name = "wallets")
-public class Wallet {
+@Table(schema = "root", name = "order_manage")
+public class OrderManage {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long walletId;
+    private Long orderManageId;
     @Column(nullable = false)
-    private State state;
+    private OmType omType;
     @Column(nullable = false)
     private LocalDateTime createAt;
     @Column(nullable = false)
     private LocalDateTime updateAt;
+    // relation
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    private Order order;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "payment_id")
-    private Payment payment;
 }

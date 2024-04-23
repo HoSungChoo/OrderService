@@ -1,6 +1,7 @@
-package com.hozzi.order.entity;
+package com.hozzi.order.domain.order.entity;
 
-import com.hozzi.order.enumerate.OmType;
+import com.hozzi.order.domain.store.entity.Menu;
+import com.hozzi.order.domain.store.entity.Store;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,13 +13,13 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(schema = "root", name = "order_manage")
-public class OrderManage {
+@Table(schema = "root", name = "order_detail")
+public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long orderManageId;
+    private Long orderDetailId;
     @Column(nullable = false)
-    private OmType omType;
+    private Integer amount;
     @Column(nullable = false)
     private LocalDateTime createAt;
     @Column(nullable = false)
@@ -28,6 +29,9 @@ public class OrderManage {
     @JoinColumn(name = "order_id")
     private Order order;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "menu_id")
+    private Menu menu;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id")
+    private Store store;
 }

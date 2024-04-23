@@ -1,6 +1,7 @@
-package com.hozzi.order.entity;
+package com.hozzi.order.domain.settlement.entity;
 
-import com.hozzi.order.enumerate.RefundType;
+import com.hozzi.order.domain.user.entity.User;
+import com.hozzi.order.domain.settlement.enumerate.RefundType;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package com.hozzi.order.config;
+package com.hozzi.order.global.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;

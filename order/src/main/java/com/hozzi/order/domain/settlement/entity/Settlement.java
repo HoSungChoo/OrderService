@@ -1,7 +1,8 @@
-package com.hozzi.order.entity;
+package com.hozzi.order.domain.settlement.entity;
 
-import com.hozzi.order.enumerate.SettlementType;
-import com.hozzi.order.enumerate.UserType;
+import com.hozzi.order.domain.order.entity.Order;
+import com.hozzi.order.domain.user.entity.User;
+import com.hozzi.order.domain.settlement.enumerate.SettlementType;
 import jakarta.persistence.*;
 import lombok.*;
 

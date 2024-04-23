@@ -1,7 +1,6 @@
-package com.hozzi.order.entity;
+package com.hozzi.order.domain.pay.entity;
 
-import com.hozzi.order.enumerate.State;
-import com.hozzi.order.enumerate.StoreType;
+import com.hozzi.order.global.enumerate.State;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,23 +12,23 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(schema = "root", name = "stores")
-public class Store {
+@Table(schema = "root", name = "payments")
+public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long storeId;
+    private Long paymentId;
     @Column(nullable = false)
-    private String storeName;
-    @Column(nullable = false)
-    private StoreType storeType;
+    private String paymentName;
     @Column(nullable = false)
     private State state;
+    @Column(nullable = false)
+    private float discountRate;
+    @Column(nullable = false)
+    private float rewardRate;
     @Column(nullable = false)
     private LocalDateTime createAt;
     @Column(nullable = false)
     private LocalDateTime updateAt;
-    // relation
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(nullable = false)
+    private LocalDateTime cancelAt;
 }
