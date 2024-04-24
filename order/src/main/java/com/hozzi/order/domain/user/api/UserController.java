@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/user")//, produces = "application/json; charset=utf-8")
 public class UserController {
     private final UserService userService;
     public UserController(UserService userService) {
@@ -31,7 +31,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @GetMapping("/pay/{userId}")
-    public ResponseEntity<ReadWalletOutDTOs> readWallet(@PathVariable Long userId){
+    public ResponseEntity<ReadWalletOutDTOs> readWallet(@PathVariable String userId){
         return ResponseEntity.status(HttpStatus.OK).body(new ReadWalletOutDTOs());
     }
     @PostMapping("/pay")
@@ -46,20 +46,22 @@ public class UserController {
     public ResponseEntity<ReadBasketOutDTO> readBasketByBasketId(@PathVariable Long basketId){
         return ResponseEntity.status(HttpStatus.OK).body(new ReadBasketOutDTO());
     }
-    @GetMapping("/item/{userId}")
-    public ResponseEntity<ReadBasketOutDTOs> readBasketByUserId(@PathVariable Long userId){
+    @GetMapping("/items/{userId}")
+    public ResponseEntity<ReadBasketOutDTOs> readBasketByUserId(@PathVariable String userId){
         return ResponseEntity.status(HttpStatus.OK).body(new ReadBasketOutDTOs());
     }
     @PostMapping("/item")
     public ResponseEntity<CreateBasketOutDTO> createBasket(@RequestBody CreateBasketInDTO createBasketInDTO){
         return ResponseEntity.status(HttpStatus.OK).body(new CreateBasketOutDTO());
     }
-    @DeleteMapping("/item/{userId}")
-    public ResponseEntity<HttpStatus> deleteBasketByUserId(@PathVariable Long userId){
+    @DeleteMapping("/items/{userId}")
+    public ResponseEntity<HttpStatus> deleteBasketByUserId(@PathVariable String userId){
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @DeleteMapping("/item/{basketId}")
-    public ResponseEntity<HttpStatus> deleteBasketByBasketId(@PathVariable Long basketId){
+    public ResponseEntity<HttpStatus> deleteBasketByBasketId(@PathVariable String basketId){
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+    // @RequestParam(value = "userId", required = true)
+    // @RequestParam(value = "basketId", required = true)
 }
