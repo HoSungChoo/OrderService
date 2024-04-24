@@ -1,5 +1,6 @@
 package com.hozzi.order.domain.order.entity;
 
+import com.hozzi.order.domain.store.entity.Store;
 import com.hozzi.order.domain.user.entity.Wallet;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,8 +24,13 @@ public class Order {
     private Long reward;
     @Column(nullable = false)
     private LocalDateTime createAt;
+    @Column(nullable = false)
+    private LocalDateTime updateAt;
     // relation
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "wallet_id")
     private Wallet wallet;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id")
+    private Store store;
 }
