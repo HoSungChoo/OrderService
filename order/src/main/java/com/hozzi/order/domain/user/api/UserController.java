@@ -34,5 +34,32 @@ public class UserController {
     public ResponseEntity<ReadWalletOutDTOs> readWalletAll(@PathVariable Long userId){
         return ResponseEntity.status(HttpStatus.OK).body(new ReadWalletOutDTOs());
     }
-    
+    @PostMapping("/pay")
+    public ResponseEntity<CreateWalletOutDTO> createwallet(@RequestBody CreateWalletInDTO createWalletInDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(new CreateWalletOutDTO());
+    }
+    @PutMapping("/pay")
+    public ResponseEntity<HttpStatus> deleteWallet(@RequestBody DeleteWalletInDTO deleteWalletInDTO){
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+    @GetMapping("/item/{basketId}")
+    public ResponseEntity<ReadBasketOutDTO> readBasket(@PathVariable Long basketId){
+        return ResponseEntity.status(HttpStatus.OK).body(new ReadBasketOutDTO());
+    }
+    @GetMapping("/item/{userId}")
+    public ResponseEntity<ReadBasketOutDTOs> readBaskets(@PathVariable Long userId){
+        return ResponseEntity.status(HttpStatus.OK).body(new ReadBasketOutDTOs());
+    }
+    @PostMapping("/item")
+    public ResponseEntity<CreateBasketOutDTO> createBasket(@RequestBody CreateBasketInDTO createBasketInDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(new CreateBasketOutDTO());
+    }
+    @DeleteMapping("/item/{userId}")
+    public ResponseEntity<HttpStatus> deleteBasketAll(@PathVariable Long userId){
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+    @DeleteMapping("/item/{basketId}")
+    public ResponseEntity<HttpStatus> deleteBasket(@PathVariable Long basketId){
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }
