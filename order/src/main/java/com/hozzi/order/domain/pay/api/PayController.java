@@ -18,7 +18,7 @@ public class PayController {
     public ResponseEntity<ReadPaymentOutDTOs> readPayment(){
         return ResponseEntity.status(HttpStatus.OK).body(new ReadPaymentOutDTOs());
     }
-    @GetMapping("/id")
+    @GetMapping("/id/{userId}")
     public ResponseEntity<ReadPaymentOutDTO> readPayment(@PathVariable String userId){
         return ResponseEntity.status(HttpStatus.OK).body(new ReadPaymentOutDTO());
     }
