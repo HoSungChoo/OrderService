@@ -31,7 +31,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @GetMapping("/pay/{userId}")
-    public ResponseEntity<ReadWalletOutDTOs> readWalletAll(@PathVariable Long userId){
+    public ResponseEntity<ReadWalletOutDTOs> readWallet(@PathVariable Long userId){
         return ResponseEntity.status(HttpStatus.OK).body(new ReadWalletOutDTOs());
     }
     @PostMapping("/pay")
@@ -43,11 +43,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @GetMapping("/item/{basketId}")
-    public ResponseEntity<ReadBasketOutDTO> readBasket(@PathVariable Long basketId){
+    public ResponseEntity<ReadBasketOutDTO> readBasketByBasketId(@PathVariable Long basketId){
         return ResponseEntity.status(HttpStatus.OK).body(new ReadBasketOutDTO());
     }
     @GetMapping("/item/{userId}")
-    public ResponseEntity<ReadBasketOutDTOs> readBaskets(@PathVariable Long userId){
+    public ResponseEntity<ReadBasketOutDTOs> readBasketByUserId(@PathVariable Long userId){
         return ResponseEntity.status(HttpStatus.OK).body(new ReadBasketOutDTOs());
     }
     @PostMapping("/item")
@@ -55,11 +55,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(new CreateBasketOutDTO());
     }
     @DeleteMapping("/item/{userId}")
-    public ResponseEntity<HttpStatus> deleteBasketAll(@PathVariable Long userId){
+    public ResponseEntity<HttpStatus> deleteBasketByUserId(@PathVariable Long userId){
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @DeleteMapping("/item/{basketId}")
-    public ResponseEntity<HttpStatus> deleteBasket(@PathVariable Long basketId){
+    public ResponseEntity<HttpStatus> deleteBasketByBasketId(@PathVariable Long basketId){
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
