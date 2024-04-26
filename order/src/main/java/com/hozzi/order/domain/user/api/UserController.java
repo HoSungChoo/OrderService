@@ -65,21 +65,27 @@ public class UserController {
     @Operation(summary = "고객 결제수단 해지", description = "사용자(고객)는 결제수단을 해지한다.")
     public ResponseEntity<HttpStatus> deleteWallet(@RequestBody DeleteWalletInDTO deleteWalletInDTO) throws Exception {
         walletService.deleteWallet(deleteWalletInDTO);
+
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @GetMapping("/item/{basketId}")
     @Operation(summary = "장바구니 특정 조회", description = "장바구니 ID를 기준으로 조회한다.")
-    public ResponseEntity<ReadBasketOutDTO> readBasketByBasketId(@PathVariable Long basketId){
-        return ResponseEntity.status(HttpStatus.OK).body(new ReadBasketOutDTO());
+    public ResponseEntity<ReadBasketOutDTO> readBasketByBasketId(@PathVariable Long basketId) throws Exception {
+        ReadBasketOutDTO readBasketOutDTO = basketService.readBasketByBasketId(basketId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(readBasketOutDTO);
     }
     @GetMapping("/items/{userId}")
     @Operation(summary = "장바구니 조회", description = "특정 사용자(고객)의 장바구니를 조회한다. 다수가 조회될 수 있다.")
-    public ResponseEntity<ReadBasketOutDTOs> readBasketByUserId(@PathVariable Long userId){
-        return ResponseEntity.status(HttpStatus.OK).body(new ReadBasketOutDTOs());
+    public ResponseEntity<ReadBasketOutDTOs> readBasketByUserId(@PathVariable Long userId) throws Exception {
+        ReadBasketOutDTOs readBasketOutDTOs = basketService.readBasketByUserId(userId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(readBasketOutDTOs);
     }
     @PostMapping("/item")
-    @Operation(summary = "", description = "")
+    @Operation(summary = "장바구니 추가", description = "사용자(고객)는 특정 가게 메뉴와 수량을 장바구니에 추가한다.")
     public ResponseEntity<CreateBasketOutDTO> createBasket(@RequestBody CreateBasketInDTO createBasketInDTO){
+
         return ResponseEntity.status(HttpStatus.OK).body(new CreateBasketOutDTO());
     }
     @DeleteMapping("/items/{userId}")
@@ -90,6 +96,4 @@ public class UserController {
     public ResponseEntity<HttpStatus> deleteBasketByBasketId(@PathVariable Long basketId){
         return ResponseEntity.status(HttpStatus.OK).build();
     }
-    // @RequestParam(value = "userId", required = true)
-    // @RequestParam(value = "basketId", required = true)
 }
