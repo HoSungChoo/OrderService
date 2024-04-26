@@ -31,11 +31,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @GetMapping("/pay/{userId}")
-    public ResponseEntity<ReadWalletOutDTOs> readWallet(@PathVariable String userId){
+    public ResponseEntity<ReadWalletOutDTOs> readWallet(@PathVariable Long userId){
         return ResponseEntity.status(HttpStatus.OK).body(new ReadWalletOutDTOs());
     }
     @PostMapping("/pay")
-    public ResponseEntity<CreateWalletOutDTO> createwallet(@RequestBody CreateWalletInDTO createWalletInDTO){
+    public ResponseEntity<CreateWalletOutDTO> createWallet(@RequestBody CreateWalletInDTO createWalletInDTO){
         return ResponseEntity.status(HttpStatus.OK).body(new CreateWalletOutDTO());
     }
     @PutMapping("/pay")
@@ -47,7 +47,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(new ReadBasketOutDTO());
     }
     @GetMapping("/items/{userId}")
-    public ResponseEntity<ReadBasketOutDTOs> readBasketByUserId(@PathVariable String userId){
+    public ResponseEntity<ReadBasketOutDTOs> readBasketByUserId(@PathVariable Long userId){
         return ResponseEntity.status(HttpStatus.OK).body(new ReadBasketOutDTOs());
     }
     @PostMapping("/item")
@@ -55,11 +55,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(new CreateBasketOutDTO());
     }
     @DeleteMapping("/items/{userId}")
-    public ResponseEntity<HttpStatus> deleteBasketByUserId(@PathVariable String userId){
+    public ResponseEntity<HttpStatus> deleteBasketByUserId(@PathVariable Long userId){
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @DeleteMapping("/item/{basketId}")
-    public ResponseEntity<HttpStatus> deleteBasketByBasketId(@PathVariable String basketId){
+    public ResponseEntity<HttpStatus> deleteBasketByBasketId(@PathVariable Long basketId){
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     // @RequestParam(value = "userId", required = true)
