@@ -21,7 +21,7 @@ public class Basket {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long basketId;
     @Column(nullable = false)
-    private Long amount;
+    private Integer amount;
     @Column(nullable = false)
     @CreatedDate
     private LocalDateTime createAt;

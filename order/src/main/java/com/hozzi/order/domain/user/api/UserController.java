@@ -84,9 +84,10 @@ public class UserController {
     }
     @PostMapping("/item")
     @Operation(summary = "장바구니 추가", description = "사용자(고객)는 특정 가게 메뉴와 수량을 장바구니에 추가한다.")
-    public ResponseEntity<CreateBasketOutDTO> createBasket(@RequestBody CreateBasketInDTO createBasketInDTO){
+    public ResponseEntity<CreateBasketOutDTO> createBasket(@RequestBody CreateBasketInDTO createBasketInDTO) throws Exception {
+        CreateBasketOutDTO createBasketOutDTO = basketService.createBasket(createBasketInDTO);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new CreateBasketOutDTO());
+        return ResponseEntity.status(HttpStatus.OK).body(createBasketOutDTO);
     }
     @DeleteMapping("/items/{userId}")
     public ResponseEntity<HttpStatus> deleteBasketByUserId(@PathVariable Long userId){
