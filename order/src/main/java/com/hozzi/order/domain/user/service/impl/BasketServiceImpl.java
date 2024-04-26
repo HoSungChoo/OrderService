@@ -9,6 +9,8 @@ import com.hozzi.order.domain.user.mapper.BasketMapper;
 import com.hozzi.order.domain.user.repo.BasketRepo;
 import com.hozzi.order.domain.user.service.BasketService;
 
+import java.util.List;
+
 public class BasketServiceImpl implements BasketService {
     private final BasketRepo basketRepo;
 
@@ -25,7 +27,9 @@ public class BasketServiceImpl implements BasketService {
 
     @Override
     public ReadBasketOutDTOs readBasketByUserId(Long userId) throws Exception {
-        return null;
+        List<ReadBasketOutDTO> readBasketOutDTOs = basketRepo.findBy(userId).orElseThrow(Exception::new);
+
+        return ReadBasketOutDTOs.builder().baskets(readBasketOutDTOs).build();
     }
 
     @Override

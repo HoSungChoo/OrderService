@@ -68,14 +68,17 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @GetMapping("/item/{basketId}")
+    @Operation(summary = "장바구니 특정 조회", description = "장바구니 ID를 기준으로 조회한다.")
     public ResponseEntity<ReadBasketOutDTO> readBasketByBasketId(@PathVariable Long basketId){
         return ResponseEntity.status(HttpStatus.OK).body(new ReadBasketOutDTO());
     }
     @GetMapping("/items/{userId}")
+    @Operation(summary = "장바구니 조회", description = "특정 사용자(고객)의 장바구니를 조회한다. 다수가 조회될 수 있다.")
     public ResponseEntity<ReadBasketOutDTOs> readBasketByUserId(@PathVariable Long userId){
         return ResponseEntity.status(HttpStatus.OK).body(new ReadBasketOutDTOs());
     }
     @PostMapping("/item")
+    @Operation(summary = "", description = "")
     public ResponseEntity<CreateBasketOutDTO> createBasket(@RequestBody CreateBasketInDTO createBasketInDTO){
         return ResponseEntity.status(HttpStatus.OK).body(new CreateBasketOutDTO());
     }
