@@ -3,10 +3,13 @@ package com.hozzi.order.domain.user.api;
 import com.hozzi.order.domain.user.dto.*;
 import com.hozzi.order.domain.user.service.UserService;
 import com.sun.net.httpserver.HttpsServer;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "UserController", description = "유저 API")
 @RestController
 @RequestMapping(value = "/user")//, produces = "application/json; charset=utf-8")
 public class UserController {
@@ -15,17 +18,23 @@ public class UserController {
         this.userService = userService;
     }
     // swagger 입력
+    // @Operation(summary = "", description = "")
     // 소셜 로그인
 
     // 회원 정보 조회
     @GetMapping("/{userId}")
+    @Operation(summary = "회원 정보 조회", description = "사용자(고객 본인, 관리자)는 회원 정보를 조회한다.")
     public ResponseEntity<ReadUserOutDTO> readUser(@PathVariable Long userId) throws Exception {
         ReadUserOutDTO readUserOutDTO = userService.readUser(userId);
+
         return ResponseEntity.status(HttpStatus.OK).body(readUserOutDTO);
     }
     @PutMapping()
-    public ResponseEntity<UpdateUserOutDTO> updateUser(@RequestBody UpdateUserInDTO updateUserInDTO){
-        return ResponseEntity.status(HttpStatus.OK).body(new UpdateUserOutDTO());
+    @Operation(summary = "회원 정보 변경", description = "사용자(고객 본인, 관리자)는 회원 정보를 변경한다.")
+    public ResponseEntity<UpdateUserOutDTO> updateUser(@RequestBody UpdateUserInDTO updateUserInDTO) throws Exception {
+        UpdateUserOutDTO updateUserOutDTO = userService.updateUser(updateUserInDTO);
+
+        return ResponseEntity.status(HttpStatus.OK).body(updateUserOutDTO);
     }
     @PutMapping("/exit")
     public ResponseEntity<HttpStatus> deleteUser(@RequestBody DeleteUserInDTO deleteUserInDTO){

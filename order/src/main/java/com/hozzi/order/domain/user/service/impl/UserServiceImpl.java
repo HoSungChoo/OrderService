@@ -21,15 +21,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public ReadUserOutDTO readUser(long userId) throws Exception {
         User user = userRepo.findById(userId).orElseThrow(Exception::new);
-        System.out.println("readUser in serviceImpl " + user.getUserId());
-        ReadUserOutDTO readUserOutDTO = UserMapper.userMapper.toDTO(user);
 
-        return readUserOutDTO;
+        return UserMapper.userMapper.toReadUserOutDTO(user);
     }
 
     @Override
+    // Repo 단에서 FlushMode 변경
     public UpdateUserOutDTO updateUser(UpdateUserInDTO updateUserInDTO) throws Exception {
-        return null;
+        User user = userRepo.findById(updateUserInDTO.getUserId()).orElseThrow(Exception::new);
+
+        user.setGender(updateUserInDTO.getGender());
+        user.setUserName(updateUserInDTO.getUserName());
+        user.setAge(updateUserInDTO.getAge());
+
+        userRepo.flush();
+
+        return UserMapper.userMapper.toUpdateUserOutDTO(user);
     }
 
     @Override
