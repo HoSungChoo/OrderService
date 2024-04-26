@@ -56,30 +56,6 @@ public class UserServiceImpl implements UserService {
         userRepo.flush();
     }
 
-    @Override
-    public ReadWalletOutDTOs readWallet(Long userId) throws Exception {
-        List<ReadWalletOutDTO> readWalletOutDTO = walletRepo.findByUserId(userId).orElseThrow(Exception::new);
-
-        return ReadWalletOutDTOs.builder().pay(readWalletOutDTO).build();
-    }
-
-    @Override
-    public CreateWalletOutDTO createWallet(CreateWalletInDTO createWalletInDTO) throws Exception {
-        Wallet wallet = Wallet.builder()
-                .state(State.ENROLL)
-                .user(userRepo.findById(createWalletInDTO.getUserId()).orElseThrow(Exception::new))
-                .payment(payRepo.findById(createWalletInDTO.getPaymentId()).orElseThrow(Exception::new))
-                .build();
-
-        walletRepo.save(wallet);
-
-        return WalletMapper.walletMapper.toCreateWalletOutDTO(wallet);
-    }
-
-    @Override
-    public void deleteWallet(DeleteWalletInDTO deleteWalletInDTO) throws Exception {
-        
-    }
 
     @Override
     public ReadBasketOutDTO readBasketByBasketId(Long basketId) throws Exception {

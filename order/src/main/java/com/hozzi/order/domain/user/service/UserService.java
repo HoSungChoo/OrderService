@@ -9,9 +9,7 @@ public interface UserService {
     ReadUserOutDTO readUser(long userId) throws Exception;
     UpdateUserOutDTO updateUser(UpdateUserInDTO updateUserInDTO) throws Exception;
     void deleteUser(DeleteUserInDTO deleteUserInDTO) throws Exception;
-    ReadWalletOutDTOs readWallet(Long userId) throws Exception;
-    CreateWalletOutDTO createWallet(CreateWalletInDTO createWalletInDTO) throws Exception;
-    void deleteWallet(DeleteWalletInDTO deleteWalletInDTO) throws Exception;
+
     ReadBasketOutDTO readBasketByBasketId(Long basketId) throws Exception;
     ReadBasketOutDTOs readBasketByUserId(Long userId) throws Exception;
     CreateBasketOutDTO createBasket(CreateBasketInDTO createBasketInDTO) throws Exception;

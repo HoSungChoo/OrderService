@@ -1,8 +1,9 @@
 package com.hozzi.order.domain.user.api;
 
 import com.hozzi.order.domain.user.dto.*;
+import com.hozzi.order.domain.user.service.BasketService;
 import com.hozzi.order.domain.user.service.UserService;
-import com.sun.net.httpserver.HttpsServer;
+import com.hozzi.order.domain.user.service.WalletService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
@@ -14,8 +15,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/user")//, produces = "application/json; charset=utf-8")
 public class UserController {
     private final UserService userService;
-    public UserController(UserService userService) {
+    private final WalletService walletService;
+    private final BasketService basketService;
+    public UserController(UserService userService, WalletService walletService, BasketService basketService) {
         this.userService = userService;
+        this.walletService = walletService;
+        this.basketService = basketService;
     }
     // swagger 입력
     // @Operation(summary = "", description = "")
@@ -46,18 +51,20 @@ public class UserController {
     @GetMapping("/pay/{userId}")
     @Operation(summary = "고객 결제수단 전체 조회", description = "사용자(고객)는 결제수단을 조회한다.")
     public ResponseEntity<ReadWalletOutDTOs> readWallet(@PathVariable Long userId) throws Exception {
-        ReadWalletOutDTOs readWalletOutDTOs = userService.readWallet(userId);
+        ReadWalletOutDTOs readWalletOutDTOs = walletService.readWallet(userId);
 
         return ResponseEntity.status(HttpStatus.OK).body(readWalletOutDTOs);
     }
     @PostMapping("/pay")
     @Operation(summary = "고객 결제수단 등록", description = "사용자(고객)는 결제수단을 등록한다.")
     public ResponseEntity<CreateWalletOutDTO> createWallet(@RequestBody CreateWalletInDTO createWalletInDTO) throws Exception {
-        CreateWalletOutDTO createWalletOutDTO = userService.createWallet(createWalletInDTO);
+        CreateWalletOutDTO createWalletOutDTO = walletService.createWallet(createWalletInDTO);
         return ResponseEntity.status(HttpStatus.OK).body(createWalletOutDTO);
     }
     @PutMapping("/pay")
-    public ResponseEntity<HttpStatus> deleteWallet(@RequestBody DeleteWalletInDTO deleteWalletInDTO){
+    @Operation(summary = "고객 결제수단 해지", description = "사용자(고객)는 결제수단을 해지한다.")
+    public ResponseEntity<HttpStatus> deleteWallet(@RequestBody DeleteWalletInDTO deleteWalletInDTO) throws Exception {
+        walletService.deleteWallet(deleteWalletInDTO);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @GetMapping("/item/{basketId}")
