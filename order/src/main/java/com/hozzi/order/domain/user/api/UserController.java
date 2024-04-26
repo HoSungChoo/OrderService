@@ -19,8 +19,9 @@ public class UserController {
 
     // 회원 정보 조회
     @GetMapping("/{userId}")
-    public ResponseEntity<ReadUserOutDTO> readUser(@PathVariable Long userId){
-        return ResponseEntity.status(HttpStatus.OK).body(new ReadUserOutDTO());
+    public ResponseEntity<ReadUserOutDTO> readUser(@PathVariable Long userId) throws Exception {
+        ReadUserOutDTO readUserOutDTO = userService.readUser(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(readUserOutDTO);
     }
     @PutMapping()
     public ResponseEntity<UpdateUserOutDTO> updateUser(@RequestBody UpdateUserInDTO updateUserInDTO){

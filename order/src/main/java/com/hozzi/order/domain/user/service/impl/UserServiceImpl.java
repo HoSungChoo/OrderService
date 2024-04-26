@@ -1,14 +1,30 @@
 package com.hozzi.order.domain.user.service.impl;
 
 import com.hozzi.order.domain.user.dto.*;
+import com.hozzi.order.domain.user.entity.User;
+import com.hozzi.order.domain.user.mapper.UserMapper;
+import com.hozzi.order.domain.user.repo.UserRepo;
 import com.hozzi.order.domain.user.service.UserService;
+import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private final UserRepo userRepo;
+
+    public UserServiceImpl(UserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
+
     @Override
     public ReadUserOutDTO readUser(long userId) throws Exception {
-        return null;
+        User user = userRepo.findById(userId).orElseThrow(Exception::new);
+        System.out.println("readUser in serviceImpl " + user.getUserId());
+        ReadUserOutDTO readUserOutDTO = UserMapper.userMapper.toDTO(user);
+
+        return readUserOutDTO;
     }
 
     @Override
