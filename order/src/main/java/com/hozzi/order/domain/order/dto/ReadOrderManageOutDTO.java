@@ -2,6 +2,7 @@ package com.hozzi.order.domain.order.dto;
 
 import com.hozzi.order.domain.order.enumerate.OmType;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 

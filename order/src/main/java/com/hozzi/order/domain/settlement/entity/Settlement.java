@@ -5,6 +5,8 @@ import com.hozzi.order.domain.user.entity.User;
 import com.hozzi.order.domain.settlement.enumerate.SettlementType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
@@ -24,8 +26,10 @@ public class Settlement {
     @Column(nullable = false)
     private SettlementType settlementType;
     @Column(nullable = false)
+    @CreatedDate
     private LocalDateTime createAt;
     @Column(nullable = false)
+    @LastModifiedDate
     private LocalDateTime updateAt;
     // relation
     @ManyToOne(fetch = FetchType.LAZY)

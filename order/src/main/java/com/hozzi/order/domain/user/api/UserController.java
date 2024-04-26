@@ -51,8 +51,10 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(readWalletOutDTOs);
     }
     @PostMapping("/pay")
-    public ResponseEntity<CreateWalletOutDTO> createWallet(@RequestBody CreateWalletInDTO createWalletInDTO){
-        return ResponseEntity.status(HttpStatus.OK).body(new CreateWalletOutDTO());
+    @Operation(summary = "고객 결제수단 등록", description = "사용자(고객)는 결제수단을 등록한다.")
+    public ResponseEntity<CreateWalletOutDTO> createWallet(@RequestBody CreateWalletInDTO createWalletInDTO) throws Exception {
+        CreateWalletOutDTO createWalletOutDTO = userService.createWallet(createWalletInDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(createWalletOutDTO);
     }
     @PutMapping("/pay")
     public ResponseEntity<HttpStatus> deleteWallet(@RequestBody DeleteWalletInDTO deleteWalletInDTO){

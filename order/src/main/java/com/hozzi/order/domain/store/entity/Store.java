@@ -5,6 +5,8 @@ import com.hozzi.order.global.enumerate.State;
 import com.hozzi.order.domain.store.enumerate.StoreType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
@@ -26,8 +28,10 @@ public class Store {
     @Column(nullable = false)
     private State state;
     @Column(nullable = false)
+    @CreatedDate
     private LocalDateTime createAt;
     @Column(nullable = false)
+    @LastModifiedDate
     private LocalDateTime updateAt;
     // relation
     @ManyToOne(fetch = FetchType.LAZY)

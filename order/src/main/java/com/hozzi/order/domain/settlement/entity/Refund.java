@@ -4,6 +4,8 @@ import com.hozzi.order.domain.user.entity.User;
 import com.hozzi.order.domain.settlement.enumerate.RefundType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
@@ -27,8 +29,10 @@ public class Refund {
     @Column(nullable = false)
     private String refundReason;
     @Column(nullable = false)
+    @CreatedDate
     private LocalDateTime createAt;
     @Column(nullable = false)
+    @LastModifiedDate
     private LocalDateTime updateAt;
     // relation
     @ManyToOne(optional = false)

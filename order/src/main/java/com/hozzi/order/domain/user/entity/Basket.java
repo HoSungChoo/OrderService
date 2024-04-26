@@ -4,6 +4,8 @@ import com.hozzi.order.domain.store.entity.Menu;
 import com.hozzi.order.domain.store.entity.Store;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
@@ -21,8 +23,10 @@ public class Basket {
     @Column(nullable = false)
     private Long amount;
     @Column(nullable = false)
+    @CreatedDate
     private LocalDateTime createAt;
     @Column(nullable = false)
+    @LastModifiedDate
     private LocalDateTime updateAt;
     // relation
     @ManyToOne(fetch = FetchType.LAZY)

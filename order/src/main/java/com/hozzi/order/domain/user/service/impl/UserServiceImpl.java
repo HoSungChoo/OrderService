@@ -1,25 +1,30 @@
 package com.hozzi.order.domain.user.service.impl;
 
+import com.hozzi.order.domain.pay.repo.PayRepo;
 import com.hozzi.order.domain.user.dto.*;
 import com.hozzi.order.domain.user.entity.User;
+import com.hozzi.order.domain.user.entity.Wallet;
 import com.hozzi.order.domain.user.enumerate.UserType;
 import com.hozzi.order.domain.user.mapper.UserMapper;
+import com.hozzi.order.domain.user.mapper.WalletMapper;
 import com.hozzi.order.domain.user.repo.UserRepo;
 import com.hozzi.order.domain.user.repo.WalletRepo;
 import com.hozzi.order.domain.user.service.UserService;
+import com.hozzi.order.global.enumerate.State;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
     private final WalletRepo walletRepo;
+    private final PayRepo payRepo;
 
-    public UserServiceImpl(UserRepo userRepo, WalletRepo walletRepo) {
+    public UserServiceImpl(UserRepo userRepo, WalletRepo walletRepo, PayRepo payRepo) {
         this.userRepo = userRepo;
         this.walletRepo = walletRepo;
+        this.payRepo = payRepo;
     }
 
     @Override
@@ -46,7 +51,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(DeleteUserInDTO deleteUserInDTO) throws Exception {
         User user = userRepo.findById(deleteUserInDTO.getUserId()).orElseThrow(Exception::new);
-
         user.setUserType(UserType.QUIT);
 
         userRepo.flush();
@@ -61,12 +65,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public CreateWalletOutDTO createWallet(CreateWalletInDTO createWalletInDTO) throws Exception {
-        return null;
+        Wallet wallet = Wallet.builder()
+                .state(State.ENROLL)
+                .user(userRepo.findById(createWalletInDTO.getUserId()).orElseThrow(Exception::new))
+                .payment(payRepo.findById(createWalletInDTO.getPaymentId()).orElseThrow(Exception::new))
+                .build();
+
+        walletRepo.save(wallet);
+
+        return WalletMapper.walletMapper.toCreateWalletOutDTO(wallet);
     }
 
     @Override
     public void deleteWallet(DeleteWalletInDTO deleteWalletInDTO) throws Exception {
-
+        
     }
 
     @Override

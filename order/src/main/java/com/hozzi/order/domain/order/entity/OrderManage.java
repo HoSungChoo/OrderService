@@ -4,6 +4,8 @@ import com.hozzi.order.domain.user.entity.User;
 import com.hozzi.order.domain.order.enumerate.OmType;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
@@ -21,8 +23,10 @@ public class OrderManage {
     @Column(nullable = false)
     private OmType omType;
     @Column(nullable = false)
+    @CreatedDate
     private LocalDateTime createAt;
     @Column(nullable = false)
+    @LastModifiedDate
     private LocalDateTime updateAt;
     // relation
     @ManyToOne(fetch = FetchType.LAZY)
