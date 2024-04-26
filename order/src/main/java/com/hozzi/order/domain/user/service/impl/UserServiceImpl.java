@@ -2,12 +2,15 @@ package com.hozzi.order.domain.user.service.impl;
 
 import com.hozzi.order.domain.user.dto.*;
 import com.hozzi.order.domain.user.entity.User;
+import com.hozzi.order.domain.user.enumerate.UserType;
 import com.hozzi.order.domain.user.mapper.UserMapper;
 import com.hozzi.order.domain.user.repo.UserRepo;
 import com.hozzi.order.domain.user.service.UserService;
 import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -41,11 +44,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(DeleteUserInDTO deleteUserInDTO) throws Exception {
+        User user = userRepo.findById(deleteUserInDTO.getUserId()).orElseThrow(Exception::new);
 
+        user.setUserType(UserType.QUIT);
+
+        userRepo.flush();
     }
 
     @Override
     public ReadWalletOutDTOs readWallet(Long userId) throws Exception {
+        //List<ReadWalletOutDTO> readWalletOutDTO =
+
         return null;
     }
 

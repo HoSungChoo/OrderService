@@ -37,12 +37,18 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(updateUserOutDTO);
     }
     @PutMapping("/exit")
-    public ResponseEntity<HttpStatus> deleteUser(@RequestBody DeleteUserInDTO deleteUserInDTO){
+    @Operation(summary = "회원 탈퇴", description = "사용자는 회원 탈퇴한다.")
+    public ResponseEntity<HttpStatus> deleteUser(@RequestBody DeleteUserInDTO deleteUserInDTO) throws Exception {
+        userService.deleteUser(deleteUserInDTO);
+
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @GetMapping("/pay/{userId}")
-    public ResponseEntity<ReadWalletOutDTOs> readWallet(@PathVariable Long userId){
-        return ResponseEntity.status(HttpStatus.OK).body(new ReadWalletOutDTOs());
+    @Operation(summary = "고객 결제수단 전체 조회", description = "사용자(고객)는 결제수단을 조회한다.")
+    public ResponseEntity<ReadWalletOutDTOs> readWallet(@PathVariable Long userId) throws Exception {
+        ReadWalletOutDTOs readWalletOutDTOs = userService.readWallet(userId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(readWalletOutDTOs);
     }
     @PostMapping("/pay")
     public ResponseEntity<CreateWalletOutDTO> createWallet(@RequestBody CreateWalletInDTO createWalletInDTO){
