@@ -55,30 +55,4 @@ public class UserServiceImpl implements UserService {
 
         userRepo.flush();
     }
-
-
-    @Override
-    public ReadBasketOutDTO readBasketByBasketId(Long basketId) throws Exception {
-        return null;
-    }
-
-    @Override
-    public ReadBasketOutDTOs readBasketByUserId(Long userId) throws Exception {
-        return null;
-    }
-
-    @Override
-    public CreateBasketOutDTO createBasket(CreateBasketInDTO createBasketInDTO) throws Exception {
-        return null;
-    }
-
-    @Override
-    public void deleteBasketByUserId(Long userId) throws Exception {
-
-    }
-
-    @Override
-    public void deleteBasketByBasketId(Long basketId) throws Exception {
-
-    }
 }
