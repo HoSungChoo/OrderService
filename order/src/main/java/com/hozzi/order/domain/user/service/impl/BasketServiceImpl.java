@@ -11,10 +11,12 @@ import com.hozzi.order.domain.user.mapper.BasketMapper;
 import com.hozzi.order.domain.user.repo.BasketRepo;
 import com.hozzi.order.domain.user.repo.UserRepo;
 import com.hozzi.order.domain.user.service.BasketService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class BasketServiceImpl implements BasketService {
     private final BasketRepo basketRepo;
     private final UserRepo userRepo;

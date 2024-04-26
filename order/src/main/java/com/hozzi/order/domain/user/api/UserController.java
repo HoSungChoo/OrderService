@@ -22,7 +22,7 @@ public class UserController {
         this.walletService = walletService;
         this.basketService = basketService;
     }
-    
+
     // 소셜 로그인
 
     // 회원 정보 조회

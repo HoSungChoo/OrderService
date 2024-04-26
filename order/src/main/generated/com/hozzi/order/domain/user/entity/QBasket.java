@@ -22,7 +22,7 @@ public class QBasket extends EntityPathBase<Basket> {
 
     public static final QBasket basket = new QBasket("basket");
 
-    public final NumberPath<Long> amount = createNumber("amount", Long.class);
+    public final NumberPath<Integer> amount = createNumber("amount", Integer.class);
 
     public final NumberPath<Long> basketId = createNumber("basketId", Long.class);
 
