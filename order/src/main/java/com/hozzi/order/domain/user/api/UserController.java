@@ -22,8 +22,7 @@ public class UserController {
         this.walletService = walletService;
         this.basketService = basketService;
     }
-    // swagger 입력
-    // @Operation(summary = "", description = "")
+    
     // 소셜 로그인
 
     // 회원 정보 조회
@@ -90,11 +89,17 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(createBasketOutDTO);
     }
     @DeleteMapping("/items/{userId}")
-    public ResponseEntity<HttpStatus> deleteBasketByUserId(@PathVariable Long userId){
+    @Operation(summary = "장바구니 전체 삭제", description = "사용자(고객)의 장바구니 내역을 전체 삭제한다.")
+    public ResponseEntity<HttpStatus> deleteBasketByUserId(@PathVariable Long userId) throws Exception {
+        basketService.deleteBasketByUserId(userId);
+
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @DeleteMapping("/item/{basketId}")
-    public ResponseEntity<HttpStatus> deleteBasketByBasketId(@PathVariable Long basketId){
+    @Operation(summary = "장바구니 부분 삭제", description = "사용자(고객)는 장바구니 내역을 부분 삭제한다.")
+    public ResponseEntity<HttpStatus> deleteBasketByBasketId(@PathVariable Long basketId) throws Exception {
+        basketService.deleteBasketByBasketId(basketId);
+
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

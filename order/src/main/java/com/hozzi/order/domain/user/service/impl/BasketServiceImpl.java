@@ -13,6 +13,7 @@ import com.hozzi.order.domain.user.repo.UserRepo;
 import com.hozzi.order.domain.user.service.BasketService;
 
 import java.util.List;
+import java.util.Optional;
 
 public class BasketServiceImpl implements BasketService {
     private final BasketRepo basketRepo;
@@ -57,11 +58,11 @@ public class BasketServiceImpl implements BasketService {
 
     @Override
     public void deleteBasketByUserId(Long userId) throws Exception {
-
+        basketRepo.deleteByUserId(userId);
     }
 
     @Override
     public void deleteBasketByBasketId(Long basketId) throws Exception {
-
+        basketRepo.deleteByBasketId(basketId);
     }
 }
