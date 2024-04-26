@@ -5,20 +5,21 @@ import com.hozzi.order.domain.user.entity.User;
 import com.hozzi.order.domain.user.enumerate.UserType;
 import com.hozzi.order.domain.user.mapper.UserMapper;
 import com.hozzi.order.domain.user.repo.UserRepo;
+import com.hozzi.order.domain.user.repo.WalletRepo;
 import com.hozzi.order.domain.user.service.UserService;
-import jdk.swing.interop.SwingInterOpUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
+    private final WalletRepo walletRepo;
 
-    public UserServiceImpl(UserRepo userRepo) {
+    public UserServiceImpl(UserRepo userRepo, WalletRepo walletRepo) {
         this.userRepo = userRepo;
+        this.walletRepo = walletRepo;
     }
 
     @Override
@@ -53,9 +54,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ReadWalletOutDTOs readWallet(Long userId) throws Exception {
-        //List<ReadWalletOutDTO> readWalletOutDTO =
+        List<ReadWalletOutDTO> readWalletOutDTO = walletRepo.findByUserId(userId).orElseThrow(Exception::new);
 
-        return null;
+        return ReadWalletOutDTOs.builder().pay(readWalletOutDTO).build();
     }
 
     @Override
