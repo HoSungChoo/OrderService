@@ -85,12 +85,14 @@ public class UserControllerTest {
     @Test
     @DisplayName("updateUser_Normal_Success")
     void updateUser_Normal_Success() throws Exception {
-        given(userService.updateUser(UpdateUserInDTO.builder()
+        UpdateUserInDTO updateUserInDTO = UpdateUserInDTO.builder()
                 .userId(100L)
                 .gender(Gender.Male)
                 .userName("Ho Sung")
                 .age(29)
-                .build()))
+                .build();
+
+        given(userService.updateUser(updateUserInDTO))
                 .willReturn(UpdateUserOutDTO.builder()
                         .userId(100L)
                         .gender(Gender.Male)
@@ -103,34 +105,22 @@ public class UserControllerTest {
                         .updateAt(LocalDateTime.now())
                         .build());
 
-        UpdateUserInDTO updateUserInDTO = UpdateUserInDTO.builder()
-                .userId(100L)
-                .gender(Gender.Male)
-                .userName("Ho Sung")
-                .age(29)
-                .build();
-
         String content = objectMapper.writeValueAsString(updateUserInDTO);
 
         mockMvc.perform(put("/user")
                         .content(content)
-                        //.accept(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.userId").exists())
+                .andExpect(jsonPath("$.gender").exists())
+                .andExpect(jsonPath("$.userName").exists())
+                .andExpect(jsonPath("$.age").exists())
+                .andExpect(jsonPath("$.userType").exists())
+                .andExpect(jsonPath("$.balance").exists())
+                .andExpect(jsonPath("$.point").exists())
                 .andDo(print());
     }
-
-    /*
-    @PutMapping()
-    @Operation(summary = "회원 정보 변경", description = "사용자(고객 본인, 관리자)는 회원 정보를 변경한다.")
-    public ResponseEntity<UpdateUserOutDTO> updateUser(@RequestBody UpdateUserInDTO updateUserInDTO) throws Exception {
-        UpdateUserOutDTO updateUserOutDTO = userService.updateUser(updateUserInDTO);
-        System.out.println(updateUserOutDTO + " ...!");
-        return ResponseEntity.status(HttpStatus.OK).body(updateUserOutDTO);
-    }
-    */
-
     @Test
     @DisplayName("updateUser_NotExistUserId_Exception")
     void updateUser_NotExistUserId_Exception() throws Exception {
@@ -140,9 +130,15 @@ public class UserControllerTest {
                 .userName("Ho Sung")
                 .age(29)
                 .build();
+
+        String content = objectMapper.writeValueAsString(updateUserInDTO);
+
         given(userService.updateUser(updateUserInDTO)).willThrow(new IllegalArgumentException());
 
-        mockMvc.perform(put("/user"))
+        mockMvc.perform(put("/user")
+                .content(content)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalArgumentException))
                 .andReturn();
     }
@@ -174,9 +170,15 @@ public class UserControllerTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.userId").exists())
+                .andExpect(jsonPath("$.gender").exists())
+                .andExpect(jsonPath("$.userName").exists())
+                .andExpect(jsonPath("$.age").exists())
+                .andExpect(jsonPath("$.userType").exists())
+                .andExpect(jsonPath("$.balance").exists())
+                .andExpect(jsonPath("$.point").exists())
                 .andDo(print());
     }
-
     @Test
     @DisplayName("deleteUser_NotExistUserId_Exception")
     void deleteUser_NotExistUserId_Exception() throws Exception {
@@ -184,9 +186,14 @@ public class UserControllerTest {
                 .userId(100L)
                 .build();
 
+        String content = objectMapper.writeValueAsString(deleteUserInDTO);
+
         given(userService.deleteUser(deleteUserInDTO)).willThrow(new IllegalArgumentException());
 
-        mockMvc.perform(put("/user/exit"))
+        mockMvc.perform(put("/user/exit")
+                        .content(content)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalArgumentException))
                 .andReturn();
     }
