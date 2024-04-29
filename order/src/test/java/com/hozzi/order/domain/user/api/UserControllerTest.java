@@ -146,8 +146,8 @@ public class UserControllerTest {
                         .userName("Ho Sung")
                         .age(29)
                         .userType(UserType.QUIT)
-                        .balance(100_000L)
-                        .point(20_000L)
+                        .balance(0L)
+                        .point(0L)
                         .createAt(LocalDateTime.now())
                         .updateAt(LocalDateTime.now())
                         .build());
