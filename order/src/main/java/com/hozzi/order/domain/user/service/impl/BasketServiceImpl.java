@@ -14,8 +14,6 @@ import com.hozzi.order.domain.user.service.BasketService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-
 @Service
 public class BasketServiceImpl implements BasketService {
     private final BasketRepo basketRepo;
@@ -32,14 +30,14 @@ public class BasketServiceImpl implements BasketService {
 
     @Override
     public ReadBasketOutDTO readBasketByBasketId(Long basketId) throws Exception {
-        Basket basket = basketRepo.findById(basketId).orElseThrow(Exception::new);
+        Basket basket = basketRepo.findById(basketId).orElseThrow(()->new IllegalArgumentException("Bad Request"));
 
         return BasketMapper.basketMapper.toReadBasketOutDTO(basket);
     }
 
     @Override
     public ReadBasketOutDTOs readBasketByUserId(Long userId) throws Exception {
-        List<ReadBasketOutDTO> readBasketOutDTOs = basketRepo.findBy(userId).orElseThrow(Exception::new);
+        List<ReadBasketOutDTO> readBasketOutDTOs = basketRepo.findBy(userId).orElseThrow(()->new IllegalArgumentException("Bad Request"));
 
         return ReadBasketOutDTOs.builder().baskets(readBasketOutDTOs).build();
     }
@@ -48,9 +46,9 @@ public class BasketServiceImpl implements BasketService {
     public CreateBasketOutDTO createBasket(CreateBasketInDTO createBasketInDTO) throws Exception {
         Basket basket = Basket.builder()
                 .amount(createBasketInDTO.getAmount())
-                .user(userRepo.findById(createBasketInDTO.getUserId()).orElseThrow(Exception::new))
-                .store(storeRepo.findById(createBasketInDTO.getStoreId()).orElseThrow(Exception::new))
-                .menu(menuRepo.findById(createBasketInDTO.getMenuId()).orElseThrow(Exception::new))
+                .user(userRepo.findById(createBasketInDTO.getUserId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
+                .store(storeRepo.findById(createBasketInDTO.getStoreId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
+                .menu(menuRepo.findById(createBasketInDTO.getMenuId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
                 .build();
 
         basketRepo.save(basket);

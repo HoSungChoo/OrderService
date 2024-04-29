@@ -29,15 +29,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ReadUserOutDTO readUser(long userId) throws Exception {
-        User user = userRepo.findById(userId).orElseThrow(Exception::new);
+        User user = userRepo.findById(userId).orElseThrow(()->new IllegalArgumentException("Bad Request"));
 
         return UserMapper.userMapper.toReadUserOutDTO(user);
     }
 
     @Override
-    // Repo 단에서 FlushMode 변경
     public UpdateUserOutDTO updateUser(UpdateUserInDTO updateUserInDTO) throws Exception {
-        User user = userRepo.findById(updateUserInDTO.getUserId()).orElseThrow(Exception::new);
+        User user = userRepo.findById(updateUserInDTO.getUserId()).orElseThrow(()->new IllegalArgumentException("Bad Request"));
 
         user.setGender(updateUserInDTO.getGender());
         user.setUserName(updateUserInDTO.getUserName());
@@ -50,7 +49,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(DeleteUserInDTO deleteUserInDTO) throws Exception {
-        User user = userRepo.findById(deleteUserInDTO.getUserId()).orElseThrow(Exception::new);
+        User user = userRepo.findById(deleteUserInDTO.getUserId()).orElseThrow(()->new IllegalArgumentException("Bad Request"));
         user.setUserType(UserType.QUIT);
 
         userRepo.flush();

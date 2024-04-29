@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "UserController", description = "유저 API")
 @RestController
-@RequestMapping(value = "/user")//, produces = "application/json; charset=utf-8")
+@RequestMapping(value = "/user")
 public class UserController {
     private final UserService userService;
     private final WalletService walletService;

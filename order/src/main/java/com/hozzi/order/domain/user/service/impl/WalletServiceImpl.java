@@ -26,7 +26,7 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public ReadWalletOutDTOs readWallet(Long userId) throws Exception {
-        List<ReadWalletOutDTO> readWalletOutDTO = walletRepo.findByUserId(userId).orElseThrow(Exception::new);
+        List<ReadWalletOutDTO> readWalletOutDTO = walletRepo.findByUserId(userId).orElseThrow(()->new IllegalArgumentException("Bad Request"));
 
         return ReadWalletOutDTOs.builder().pay(readWalletOutDTO).build();
     }
@@ -35,8 +35,8 @@ public class WalletServiceImpl implements WalletService {
     public CreateWalletOutDTO createWallet(CreateWalletInDTO createWalletInDTO) throws Exception {
         Wallet wallet = Wallet.builder()
                 .state(State.ENROLL)
-                .user(userRepo.findById(createWalletInDTO.getUserId()).orElseThrow(Exception::new))
-                .payment(payRepo.findById(createWalletInDTO.getPaymentId()).orElseThrow(Exception::new))
+                .user(userRepo.findById(createWalletInDTO.getUserId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
+                .payment(payRepo.findById(createWalletInDTO.getPaymentId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
                 .build();
 
         walletRepo.save(wallet);
@@ -45,7 +45,7 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public void deleteWallet(DeleteWalletInDTO deleteWalletInDTO) throws Exception {
-        Wallet wallet = walletRepo.findBy(deleteWalletInDTO).orElseThrow(Exception::new);
+        Wallet wallet = walletRepo.findBy(deleteWalletInDTO).orElseThrow(()->new IllegalArgumentException("Bad Request"));
         wallet.setState(State.CANCEL);
 
         walletRepo.flush();
