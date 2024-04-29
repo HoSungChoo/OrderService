@@ -37,7 +37,7 @@ public class UserController {
     @Operation(summary = "회원 정보 변경", description = "사용자(고객 본인, 관리자)는 회원 정보를 변경한다.")
     public ResponseEntity<UpdateUserOutDTO> updateUser(@RequestBody UpdateUserInDTO updateUserInDTO) throws Exception {
         UpdateUserOutDTO updateUserOutDTO = userService.updateUser(updateUserInDTO);
-
+        System.out.println(updateUserInDTO.getUserId() + " " + updateUserInDTO.getAge());
         return ResponseEntity.status(HttpStatus.OK).body(updateUserOutDTO);
     }
     @PutMapping("/exit")

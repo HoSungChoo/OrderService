@@ -85,16 +85,12 @@ public class UserControllerTest {
     @Test
     @DisplayName("updateUser_Normal_Success")
     void updateUser_Normal_Success() throws Exception {
-        UpdateUserInDTO updateUserInDTO = UpdateUserInDTO.builder()
+        given(userService.updateUser(UpdateUserInDTO.builder()
                 .userId(100L)
                 .gender(Gender.Male)
                 .userName("Ho Sung")
                 .age(29)
-                .build();
-
-        String content = objectMapper.writeValueAsString(updateUserInDTO);
-
-        given(userService.updateUser(updateUserInDTO))
+                .build()))
                 .willReturn(UpdateUserOutDTO.builder()
                         .userId(100L)
                         .gender(Gender.Male)
@@ -107,13 +103,33 @@ public class UserControllerTest {
                         .updateAt(LocalDateTime.now())
                         .build());
 
+        UpdateUserInDTO updateUserInDTO = UpdateUserInDTO.builder()
+                .userId(100L)
+                .gender(Gender.Male)
+                .userName("Ho Sung")
+                .age(29)
+                .build();
+
+        String content = objectMapper.writeValueAsString(updateUserInDTO);
+
         mockMvc.perform(put("/user")
                         .content(content)
-                        .accept(MediaType.APPLICATION_JSON)
+                        //.accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andExpect(jsonPath("$.userId").exists())
                 .andDo(print());
     }
+
+    /*
+    @PutMapping()
+    @Operation(summary = "회원 정보 변경", description = "사용자(고객 본인, 관리자)는 회원 정보를 변경한다.")
+    public ResponseEntity<UpdateUserOutDTO> updateUser(@RequestBody UpdateUserInDTO updateUserInDTO) throws Exception {
+        UpdateUserOutDTO updateUserOutDTO = userService.updateUser(updateUserInDTO);
+        System.out.println(updateUserOutDTO + " ...!");
+        return ResponseEntity.status(HttpStatus.OK).body(updateUserOutDTO);
+    }
+    */
 
     @Test
     @DisplayName("updateUser_NotExistUserId_Exception")
@@ -130,6 +146,7 @@ public class UserControllerTest {
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalArgumentException))
                 .andReturn();
     }
+
     @Test
     @DisplayName("deleteUser_Normal_Success")
     void deleteUser_Normal_Success() throws Exception {
