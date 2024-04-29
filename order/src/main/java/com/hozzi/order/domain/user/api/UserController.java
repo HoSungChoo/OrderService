@@ -42,10 +42,10 @@ public class UserController {
     }
     @PutMapping("/exit")
     @Operation(summary = "회원 탈퇴", description = "사용자는 회원 탈퇴한다.")
-    public ResponseEntity<HttpStatus> deleteUser(@RequestBody DeleteUserInDTO deleteUserInDTO) throws Exception {
-        userService.deleteUser(deleteUserInDTO);
+    public ResponseEntity<DeleteUserOutDTO> deleteUser(@RequestBody DeleteUserInDTO deleteUserInDTO) throws Exception {
+        DeleteUserOutDTO deleteUserOutDTO = userService.deleteUser(deleteUserInDTO);
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(deleteUserOutDTO);
     }
     @GetMapping("/pay/{userId}")
     @Operation(summary = "고객 결제수단 전체 조회", description = "사용자(고객)는 결제수단을 조회한다.")

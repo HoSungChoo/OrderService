@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface UserService {
     ReadUserOutDTO readUser(long userId) throws Exception;
     UpdateUserOutDTO updateUser(UpdateUserInDTO updateUserInDTO) throws Exception;
-    void deleteUser(DeleteUserInDTO deleteUserInDTO) throws Exception;
+    DeleteUserOutDTO deleteUser(DeleteUserInDTO deleteUserInDTO) throws Exception;
 }

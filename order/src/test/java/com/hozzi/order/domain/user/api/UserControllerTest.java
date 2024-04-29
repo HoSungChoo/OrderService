@@ -2,9 +2,7 @@ package com.hozzi.order.domain.user.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.hozzi.order.domain.user.dto.ReadUserOutDTO;
-import com.hozzi.order.domain.user.dto.UpdateUserInDTO;
-import com.hozzi.order.domain.user.dto.UpdateUserOutDTO;
+import com.hozzi.order.domain.user.dto.*;
 import com.hozzi.order.domain.user.enumerate.Gender;
 import com.hozzi.order.domain.user.enumerate.UserType;
 import com.hozzi.order.domain.user.service.BasketService;
@@ -129,6 +127,49 @@ public class UserControllerTest {
         given(userService.updateUser(updateUserInDTO)).willThrow(new IllegalArgumentException());
 
         mockMvc.perform(put("/user"))
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalArgumentException))
+                .andReturn();
+    }
+    @Test
+    @DisplayName("deleteUser_Normal_Success")
+    void deleteUser_Normal_Success() throws Exception {
+        DeleteUserInDTO deleteUserInDTO = DeleteUserInDTO.builder()
+                .userId(100L)
+                .build();
+
+        String content = objectMapper.writeValueAsString(deleteUserInDTO);
+
+        given(userService.deleteUser(deleteUserInDTO))
+                .willReturn(DeleteUserOutDTO.builder()
+                        .userId(100L)
+                        .gender(Gender.Male)
+                        .userName("Ho Sung")
+                        .age(29)
+                        .userType(UserType.QUIT)
+                        .balance(100_000L)
+                        .point(20_000L)
+                        .createAt(LocalDateTime.now())
+                        .updateAt(LocalDateTime.now())
+                        .build());
+
+        mockMvc.perform(put("/user/exit")
+                        .content(content)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("deleteUser_NotExistUserId_Exception")
+    void deleteUser_NotExistUserId_Exception() throws Exception {
+        DeleteUserInDTO deleteUserInDTO = DeleteUserInDTO.builder()
+                .userId(100L)
+                .build();
+
+        given(userService.deleteUser(deleteUserInDTO)).willThrow(new IllegalArgumentException());
+
+        mockMvc.perform(put("/user/exit"))
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalArgumentException))
                 .andReturn();
     }

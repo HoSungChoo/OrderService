@@ -1,5 +1,6 @@
 package com.hozzi.order.domain.user.mapper;
 
+import com.hozzi.order.domain.user.dto.DeleteUserOutDTO;
 import com.hozzi.order.domain.user.dto.ReadUserOutDTO;
 import com.hozzi.order.domain.user.dto.UpdateUserOutDTO;
 import com.hozzi.order.domain.user.entity.User;
@@ -12,4 +13,5 @@ public interface UserMapper {
     UserMapper userMapper = Mappers.getMapper(UserMapper.class);
     ReadUserOutDTO toReadUserOutDTO(User user);
     UpdateUserOutDTO toUpdateUserOutDTO(User user);
+    DeleteUserOutDTO toDeleteUserOutDTO(User user);
 }

@@ -48,10 +48,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(DeleteUserInDTO deleteUserInDTO) throws Exception {
+    public DeleteUserOutDTO deleteUser(DeleteUserInDTO deleteUserInDTO) throws Exception {
         User user = userRepo.findById(deleteUserInDTO.getUserId()).orElseThrow(()->new IllegalArgumentException("Bad Request"));
         user.setUserType(UserType.QUIT);
 
         userRepo.flush();
+
+        return UserMapper.userMapper.toDeleteUserOutDTO(user);
     }
 }

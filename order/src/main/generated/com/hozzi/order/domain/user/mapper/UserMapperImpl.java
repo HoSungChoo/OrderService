@@ -1,5 +1,7 @@
 package com.hozzi.order.domain.user.mapper;
 
+import com.hozzi.order.domain.user.dto.DeleteUserOutDTO;
+import com.hozzi.order.domain.user.dto.DeleteUserOutDTO.DeleteUserOutDTOBuilder;
 import com.hozzi.order.domain.user.dto.ReadUserOutDTO;
 import com.hozzi.order.domain.user.dto.ReadUserOutDTO.ReadUserOutDTOBuilder;
 import com.hozzi.order.domain.user.dto.UpdateUserOutDTO;
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-04-29T20:00:45+0900",
+    date = "2024-04-29T20:16:30+0900",
     comments = "version: 1.4.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.7.jar, environment: Java 21.0.2 (Oracle Corporation)"
 )
 @Component
@@ -56,5 +58,26 @@ public class UserMapperImpl implements UserMapper {
         updateUserOutDTO.updateAt( user.getUpdateAt() );
 
         return updateUserOutDTO.build();
+    }
+
+    @Override
+    public DeleteUserOutDTO toDeleteUserOutDTO(User user) {
+        if ( user == null ) {
+            return null;
+        }
+
+        DeleteUserOutDTOBuilder deleteUserOutDTO = DeleteUserOutDTO.builder();
+
+        deleteUserOutDTO.userId( user.getUserId() );
+        deleteUserOutDTO.gender( user.getGender() );
+        deleteUserOutDTO.userName( user.getUserName() );
+        deleteUserOutDTO.age( user.getAge() );
+        deleteUserOutDTO.userType( user.getUserType() );
+        deleteUserOutDTO.balance( user.getBalance() );
+        deleteUserOutDTO.point( user.getPoint() );
+        deleteUserOutDTO.createAt( user.getCreateAt() );
+        deleteUserOutDTO.updateAt( user.getUpdateAt() );
+
+        return deleteUserOutDTO.build();
     }
 }
