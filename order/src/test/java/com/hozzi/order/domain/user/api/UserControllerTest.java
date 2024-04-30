@@ -9,6 +9,7 @@ import com.hozzi.order.domain.user.service.BasketService;
 import com.hozzi.order.domain.user.service.impl.BasketServiceImpl;
 import com.hozzi.order.domain.user.service.impl.UserServiceImpl;
 import com.hozzi.order.domain.user.service.impl.WalletServiceImpl;
+import com.hozzi.order.global.enumerate.State;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.BDDMockito.given;
 import static org.junit.jupiter.api.Assertions.*;
@@ -88,7 +91,7 @@ public class UserControllerTest {
         UpdateUserInDTO updateUserInDTO = UpdateUserInDTO.builder()
                 .userId(100L)
                 .gender(Gender.Male)
-                .userName("Ho Sung")
+                .userName("HoZzi")
                 .age(29)
                 .build();
 
@@ -96,7 +99,7 @@ public class UserControllerTest {
                 .willReturn(UpdateUserOutDTO.builder()
                         .userId(100L)
                         .gender(Gender.Male)
-                        .userName("Ho Sung")
+                        .userName("HoZzi")
                         .age(29)
                         .userType(UserType.USER)
                         .balance(100_000L)
@@ -197,4 +200,47 @@ public class UserControllerTest {
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalArgumentException))
                 .andReturn();
     }
+
+    @Test
+    @DisplayName("readWallet_Normal_Success")
+    void readWallet_Normal_Success() throws Exception {
+        ReadWalletOutDTO readWalletOutDTO = ReadWalletOutDTO.builder()
+                .walletId(100L)
+                .state(State.ENROLL)
+                .paymentId(1L)
+                .paymentName("HozziPay")
+                .createAt(LocalDateTime.now())
+                .updateAt(LocalDateTime.now())
+                .build();
+
+        List<ReadWalletOutDTO> readWalletOutDTOs = new ArrayList<>();
+        readWalletOutDTOs.add(readWalletOutDTO);
+
+        given(walletService.readWallet(100L))
+                .willReturn(ReadWalletOutDTOs.builder()
+                        .pay(readWalletOutDTOs)
+                        .build());
+
+        mockMvc.perform(get("/user/pay/" + "100"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.pay[0].walletId").exists())
+                .andExpect(jsonPath("$.pay[0].state").exists())
+                .andExpect(jsonPath("$.pay[0].paymentId").exists())
+                .andExpect(jsonPath("$.pay[0].paymentName").exists())
+                .andExpect(jsonPath("$.pay[0].createAt").exists())
+                .andExpect(jsonPath("$.pay[0].updateAt").exists())
+                .andDo(print());
+
+    }
+    @Test
+    @DisplayName("readWallet_NotExistUserId_Exception")
+    void readWallet_NotExistUserId_Exception() throws Exception {
+        given(walletService.readWallet(100L))
+                .willThrow(new IllegalArgumentException());
+
+        mockMvc.perform(get("/user/pay/" + "100"))
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalArgumentException))
+                .andReturn();
+    }
+
 }

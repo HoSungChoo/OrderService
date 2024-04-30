@@ -2,7 +2,9 @@ package com.hozzi.order.domain.user.service.impl;
 
 import com.hozzi.order.domain.pay.repo.PayRepo;
 import com.hozzi.order.domain.user.dto.*;
+import com.hozzi.order.domain.user.entity.User;
 import com.hozzi.order.domain.user.entity.Wallet;
+import com.hozzi.order.domain.user.enumerate.UserType;
 import com.hozzi.order.domain.user.mapper.WalletMapper;
 import com.hozzi.order.domain.user.repo.UserRepo;
 import com.hozzi.order.domain.user.repo.WalletRepo;
@@ -26,6 +28,11 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public ReadWalletOutDTOs readWallet(Long userId) throws Exception {
+        User user = userRepo.findById(userId).orElseThrow(()->new IllegalArgumentException("Bad Request"));
+
+        if (user.getUserType().equals(UserType.QUIT))
+            throw new IllegalArgumentException("user has quit");
+
         List<ReadWalletOutDTO> readWalletOutDTO = walletRepo.findByUserId(userId).orElseThrow(()->new IllegalArgumentException("Bad Request"));
 
         return ReadWalletOutDTOs.builder().pay(readWalletOutDTO).build();
