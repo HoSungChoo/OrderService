@@ -33,6 +33,8 @@ public class Store {
     @Column(nullable = false)
     @LastModifiedDate
     private LocalDateTime updateAt;
+    @Column(nullable = false)
+    private LocalDateTime cancelAt;
     // relation
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

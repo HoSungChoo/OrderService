@@ -22,6 +22,8 @@ public class QStore extends EntityPathBase<Store> {
 
     public static final QStore store = new QStore("store");
 
+    public final DateTimePath<java.time.LocalDateTime> cancelAt = createDateTime("cancelAt", java.time.LocalDateTime.class);
+
     public final DateTimePath<java.time.LocalDateTime> createAt = createDateTime("createAt", java.time.LocalDateTime.class);
 
     public final EnumPath<com.hozzi.order.global.enumerate.State> state = createEnum("state", com.hozzi.order.global.enumerate.State.class);
