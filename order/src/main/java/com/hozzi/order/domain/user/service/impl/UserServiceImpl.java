@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ReadUserOutDTO readUser(long userId) throws Exception {
+    public ReadUserOutDTO readUser(Long userId) throws Exception {
         User user = userRepo.findById(userId).orElseThrow(()->new IllegalArgumentException("Bad Request"));
 
         return UserMapper.userMapper.toReadUserOutDTO(user);

@@ -31,7 +31,7 @@ public class WalletServiceImpl implements WalletService {
         User user = userRepo.findById(userId).orElseThrow(()->new IllegalArgumentException("Bad Request"));
 
         if (user.getUserType().equals(UserType.QUIT))
-            throw new IllegalArgumentException("user has quit");
+            throw new IllegalArgumentException("user quit");
 
         List<ReadWalletOutDTO> readWalletOutDTO = walletRepo.findByUserId(userId).orElseThrow(()->new IllegalArgumentException("Bad Request"));
 

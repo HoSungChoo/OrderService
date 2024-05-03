@@ -37,7 +37,7 @@ public class UserController {
     @Operation(summary = "회원 정보 변경", description = "사용자(고객 본인, 관리자)는 회원 정보를 변경한다.")
     public ResponseEntity<UpdateUserOutDTO> updateUser(@RequestBody UpdateUserInDTO updateUserInDTO) throws Exception {
         UpdateUserOutDTO updateUserOutDTO = userService.updateUser(updateUserInDTO);
-        System.out.println(updateUserInDTO.getUserId() + " " + updateUserInDTO.getAge());
+
         return ResponseEntity.status(HttpStatus.OK).body(updateUserOutDTO);
     }
     @PutMapping("/exit")
@@ -58,6 +58,7 @@ public class UserController {
     @Operation(summary = "고객 결제수단 등록", description = "사용자(고객)는 결제수단을 등록한다.")
     public ResponseEntity<CreateWalletOutDTO> createWallet(@RequestBody CreateWalletInDTO createWalletInDTO) throws Exception {
         CreateWalletOutDTO createWalletOutDTO = walletService.createWallet(createWalletInDTO);
+
         return ResponseEntity.status(HttpStatus.OK).body(createWalletOutDTO);
     }
     @PutMapping("/pay")
