@@ -8,6 +8,7 @@ import com.hozzi.order.domain.store.service.StoreService;
 import com.hozzi.order.domain.user.repo.UserRepo;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -33,6 +34,8 @@ public class StoreServiceImpl implements StoreService {
                 .storeName(createStoreInDTO.getStoreName())
                 .storeType(createStoreInDTO.getStoreType())
                 .state(createStoreInDTO.getState())
+                .cancelAt(LocalDateTime.MAX)
+                .user(userRepo.findById(createStoreInDTO.getUserId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
                 .build();
 
         storeRepo.save(store);
