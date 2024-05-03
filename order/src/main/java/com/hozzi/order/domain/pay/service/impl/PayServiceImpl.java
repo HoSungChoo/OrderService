@@ -44,7 +44,6 @@ public class PayServiceImpl implements PayService {
                 .build();
 
         payRepo.save(payment);
-        payRepo.flush();
 
         return PayMapper.payMapper.toCreatePaymentOutDTO(payment);
     }
@@ -55,7 +54,5 @@ public class PayServiceImpl implements PayService {
 
         payment.setState(State.CANCEL);
         payment.setCancelAt(LocalDateTime.now());
-
-        payRepo.flush();
     }
 }
