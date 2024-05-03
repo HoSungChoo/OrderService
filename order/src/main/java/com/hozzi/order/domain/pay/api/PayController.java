@@ -16,18 +16,26 @@ public class PayController {
 
     @GetMapping()
     public ResponseEntity<ReadPaymentOutDTOs> readPayments(){
-        return ResponseEntity.status(HttpStatus.OK).body(new ReadPaymentOutDTOs());
+        ReadPaymentOutDTOs readPaymentOutDTOs = payService.readPayments();
+
+        return ResponseEntity.status(HttpStatus.OK).body(readPaymentOutDTOs);
     }
     @GetMapping("/id/{paymentId}")
-    public ResponseEntity<ReadPaymentOutDTO> readPayment(@PathVariable String paymentId){
-        return ResponseEntity.status(HttpStatus.OK).body(new ReadPaymentOutDTO());
+    public ResponseEntity<ReadPaymentOutDTO> readPayment(@PathVariable Long paymentId){
+        ReadPaymentOutDTO readPaymentOutDTO = payService.readPayment(paymentId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(readPaymentOutDTO);
     }
     @PostMapping()
     public ResponseEntity<CreatePaymentOutDTO> createPayment(@RequestBody CreatePaymentInDTO createPaymentInDTO){
-        return ResponseEntity.status(HttpStatus.OK).body(new CreatePaymentOutDTO());
+        CreatePaymentOutDTO createPaymentOutDTO = payService.createPayment(createPaymentInDTO);
+
+        return ResponseEntity.status(HttpStatus.OK).body(createPaymentOutDTO);
     }
     @PutMapping()
     public ResponseEntity<HttpStatus> deletePayment(@RequestBody DeletePaymentInDTO deletePaymentInDTO){
+        payService.deletePayment(deletePaymentInDTO);
+
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
