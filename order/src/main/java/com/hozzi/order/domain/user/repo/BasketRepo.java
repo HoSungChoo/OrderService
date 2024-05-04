@@ -11,5 +11,5 @@ import java.util.Optional;
 
 @Repository
 public interface BasketRepo extends JpaRepository<Basket, Long>, CustomBasketRepo {
-
+    Optional<List<Basket>> findByUserId(Long userId);
 }

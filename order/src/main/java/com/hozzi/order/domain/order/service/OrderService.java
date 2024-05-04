@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface OrderService{
     ReadOrderManageOutDTOs readOrderManage(Long orderId);
     CreateOrderOutDTO createOrder(CreateOrderInDTO createOrderInDTO);
-    CreateOrderUsingBasketOutDTO createOrderUsingBasket(CreateOrderUsingBasketInDTO createOrderUsingBasketInDTO);
+    CreateOrderUsingBasketOutDTOs createOrderUsingBasket(CreateOrderUsingBasketInDTO createOrderUsingBasketInDTO);
     UpdateOrderByCustomOutDTO updateOrder(@RequestBody UpdateOrderByCustomInDTO updateOrderByCustomInDTO);
     UpdateOrderByOwnerOutDTO updateOrder(@RequestBody UpdateOrderByOwnerInDTO updateOrderByOwnerInDTO);
     UpdateOrderByAdminOutDTO updateOrder(@RequestBody UpdateOrderByAdminInDTO updateOrderByAdminInDTO);

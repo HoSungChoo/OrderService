@@ -26,6 +26,8 @@ public class Order {
     @Column(nullable = false)
     private Long reward;
     @Column(nullable = false)
+    private Integer amount;
+    @Column(nullable = false)
     @CreatedDate
     private LocalDateTime createAt;
     @Column(nullable = false)

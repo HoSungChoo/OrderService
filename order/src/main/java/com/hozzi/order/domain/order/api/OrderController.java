@@ -22,8 +22,8 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.OK).body(new CreateOrderOutDTO());
     }
     @PostMapping("/item")
-    private ResponseEntity<CreateOrderUsingBasketOutDTO> createOrderUsingBasket(@RequestBody CreateOrderUsingBasketInDTO createOrderUsingBasketInDTO){
-        return ResponseEntity.status(HttpStatus.OK).body(new CreateOrderUsingBasketOutDTO());
+    private ResponseEntity<CreateOrderUsingBasketOutDTOs> createOrderUsingBasket(@RequestBody CreateOrderUsingBasketInDTO createOrderUsingBasketInDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(new CreateOrderUsingBasketOutDTOs());
     }
     @PutMapping("/custom")
     private ResponseEntity<UpdateOrderByCustomOutDTO> updateOrder(@RequestBody UpdateOrderByCustomInDTO updateOrderByCustomInDTO){
