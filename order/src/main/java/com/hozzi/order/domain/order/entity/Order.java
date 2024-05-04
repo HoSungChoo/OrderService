@@ -1,5 +1,6 @@
 package com.hozzi.order.domain.order.entity;
 
+import com.hozzi.order.domain.store.entity.Menu;
 import com.hozzi.order.domain.store.entity.Store;
 import com.hozzi.order.domain.user.entity.Wallet;
 import jakarta.persistence.*;
@@ -37,4 +38,7 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")
     private Store store;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "menu_id")
+    private Menu menu;
 }

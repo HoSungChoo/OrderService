@@ -26,15 +26,15 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.OK).body(new CreateOrderUsingBasketOutDTO());
     }
     @PutMapping("/custom")
-    private ResponseEntity<HttpStatus> updateOrder(@RequestBody UpdateOrderByCustomInDTO updateOrderByCustomInDTO){
-        return ResponseEntity.status(HttpStatus.OK).build();
+    private ResponseEntity<UpdateOrderByCustomOutDTO> updateOrder(@RequestBody UpdateOrderByCustomInDTO updateOrderByCustomInDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(new UpdateOrderByCustomOutDTO());
     }
     @PostMapping("/owner")
-    private ResponseEntity<HttpStatus> updateOrder(@RequestBody UpdateOrderByOwnerInDTO updateOrderByOwnerInDTO){
-        return ResponseEntity.status(HttpStatus.OK).build();
+    private ResponseEntity<UpdateOrderByOwnerOutDTO> updateOrder(@RequestBody UpdateOrderByOwnerInDTO updateOrderByOwnerInDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(new UpdateOrderByOwnerOutDTO());
     }
     @PostMapping("/admin")
-    private ResponseEntity<HttpStatus> updateOrder(@RequestBody UpdateOrderByAdminInDTO updateOrderByAdminInDTO){
-        return ResponseEntity.status(HttpStatus.OK).build();
+    private ResponseEntity<UpdateOrderByAdminOutDTO> updateOrder(@RequestBody UpdateOrderByAdminInDTO updateOrderByAdminInDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(new UpdateOrderByAdminOutDTO());
     }
 }

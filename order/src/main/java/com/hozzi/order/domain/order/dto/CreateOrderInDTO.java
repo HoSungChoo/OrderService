@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class CreateOrderInDTO {
-    private Long userId;
+    private Long walletId;
     private Long storeId;
     private Long menuId;
     private Integer amount;
