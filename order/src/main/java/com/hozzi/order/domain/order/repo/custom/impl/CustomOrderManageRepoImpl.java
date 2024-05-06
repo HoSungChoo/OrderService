@@ -1,6 +1,7 @@
 package com.hozzi.order.domain.order.repo.custom.impl;
 
 import com.hozzi.order.domain.order.dto.ReadOrderManageOutDTO;
+import com.hozzi.order.domain.order.entity.OrderManage;
 import com.hozzi.order.domain.order.entity.QOrder;
 import com.hozzi.order.domain.order.entity.QOrderManage;
 import com.hozzi.order.domain.order.repo.custom.CustomOrderManageRepo;
@@ -33,5 +34,16 @@ public class CustomOrderManageRepoImpl implements CustomOrderManageRepo {
                         .from(qOrderManage)
                         .where(qOrderManage.order.orderId.eq(orderId))
                         .fetch());
+    }
+
+    @Override
+    public Optional<List<OrderManage>> findAllByOrderId(Long orderId) {
+        return Optional.of(
+                new JPAQuery<>(em)
+                        .select(qOrderManage)
+                        .from(qOrderManage)
+                        .where(qOrderManage.order.orderId.eq(orderId))
+                        .fetch()
+        );
     }
 }

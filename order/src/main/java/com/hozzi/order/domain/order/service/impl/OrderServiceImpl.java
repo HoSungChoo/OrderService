@@ -5,6 +5,7 @@ import com.hozzi.order.domain.order.dto.*;
 import com.hozzi.order.domain.order.entity.Order;
 import com.hozzi.order.domain.order.entity.OrderManage;
 import com.hozzi.order.domain.order.enumerate.OmType;
+import com.hozzi.order.domain.order.mapper.OrderManageMapper;
 import com.hozzi.order.domain.order.mapper.OrderMapper;
 import com.hozzi.order.domain.order.repo.OrderManageRepo;
 import com.hozzi.order.domain.order.repo.OrderRepo;
@@ -96,7 +97,19 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public UpdateOrderByCustomOutDTO updateOrder(UpdateOrderByCustomInDTO updateOrderByCustomInDTO) {
-        return null;
+        List<OrderManage> orderManages = orderManageRepo.findAllByOrderId(updateOrderByCustomInDTO.getOrderId()).orElseThrow(()->new IllegalArgumentException("Bad Request"));
+
+        if (orderManages.size() > 1)
+            throw new IllegalArgumentException("Bad Request");
+
+        OrderManage orderManage = OrderManage.builder()
+                .omType(OmType.CANCEL)
+                .order(orderRepo.findById(updateOrderByCustomInDTO.getOrderId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
+                .build();
+
+        orderManageRepo.save(orderManage);
+
+        return OrderManageMapper.orderManageMapper.toUpdateOrderByCustomOutDTO(orderManage);
     }
 
     @Override
