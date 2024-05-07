@@ -9,8 +9,6 @@ import java.util.List;
 public interface SettlementService {
     CreateRewardOutDTO createReward(@RequestBody CreateRewardInDTO createRewardInDTO);
     CreatePayoutOutDTO createPayout(@RequestBody CreatePayoutInDTO createPayoutInDTO);
-    CreateRefundOutDTO createReward(@RequestBody CreateRefundInDTO createRefundInDTO);
     ReadSettlementOutDTOs readReward(String beginDate, String endDate);
     ReadSettlementOutDTOs readPayout(String beginDate, String endDate);
-    ReadRefundOutDTOs readRefund(String beginDate, String endDate);
 }

@@ -60,23 +60,6 @@ public class SettlementServiceImpl implements SettlementService {
     }
 
     @Override
-    public CreateRefundOutDTO createReward(CreateRefundInDTO createRefundInDTO) {
-        Refund refund = Refund.builder()
-                .customBalance(createRefundInDTO.getCustomBalance())
-                .ownerBalance(createRefundInDTO.getOwnerBalance())
-                .refundType(createRefundInDTO.getRefundType())
-                .refundReason(createRefundInDTO.getRefundReason())
-                .custom(userRepo.findById(createRefundInDTO.getCustomId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
-                .owner(userRepo.findById(createRefundInDTO.getOwnerId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
-                .order(orderRepo.findById(createRefundInDTO.getOwnerId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
-                .build();
-
-        refundRepo.save(refund);
-
-        return RefundMapper.refundMapper.toCreateRefundOutDTO(refund);
-    }
-
-    @Override
     public ReadSettlementOutDTOs readReward(String beginDate, String endDate) {
         LocalDateTime beginDateTime = LocalDateTime.parse(beginDate, DateTimeFormatter.ofPattern("yyyyMMdd"));
         LocalDateTime endDateTime = LocalDateTime.parse(endDate, DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -98,14 +81,5 @@ public class SettlementServiceImpl implements SettlementService {
         return ReadSettlementOutDTOs.builder().settlements(readSettlementOutDTOS).build();
     }
 
-    @Override
-    public ReadRefundOutDTOs readRefund(String beginDate, String endDate) {
-        LocalDateTime beginDateTime = LocalDateTime.parse(beginDate, DateTimeFormatter.ofPattern("yyyyMMdd"));
-        LocalDateTime endDateTime = LocalDateTime.parse(endDate, DateTimeFormatter.ofPattern("yyyyMMdd"));
 
-        List<ReadRefundOutDTO> readRefundOutDTOS = refundRepo.findAllBetweenDate(beginDateTime, endDateTime)
-                .orElseThrow(()->new IllegalArgumentException("Bad Request"));
-
-        return ReadRefundOutDTOs.builder().refunds(readRefundOutDTOS).build();
-    }
 }
