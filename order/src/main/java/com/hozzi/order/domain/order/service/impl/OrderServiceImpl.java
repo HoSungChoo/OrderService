@@ -99,7 +99,7 @@ public class OrderServiceImpl implements OrderService {
     public UpdateOrderByCustomOutDTO updateOrder(UpdateOrderByCustomInDTO updateOrderByCustomInDTO) {
         List<OrderManage> orderManages = orderManageRepo.findAllByOrderId(updateOrderByCustomInDTO.getOrderId()).orElseThrow(()->new IllegalArgumentException("Bad Request"));
 
-        if (orderManages.size() > 1)
+        if (orderManages.size() != 1)
             throw new IllegalArgumentException("Bad Request");
 
         OrderManage orderManage = OrderManage.builder()
@@ -114,11 +114,36 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public UpdateOrderByOwnerOutDTO updateOrder(UpdateOrderByOwnerInDTO updateOrderByOwnerInDTO) {
-        return null;
+        List<OrderManage> orderManages = orderManageRepo.findAllByOrderId(updateOrderByOwnerInDTO.getOrderId()).orElseThrow(()->new IllegalArgumentException("Bad Request"));
+
+        if (orderManages.size() != 2)
+            throw new IllegalArgumentException("Bad Request");
+
+        if (!(updateOrderByOwnerInDTO.getOmType().equals(OmType.PREPARE) || updateOrderByOwnerInDTO.getOmType().equals(OmType.CANCEL)))
+            throw new IllegalArgumentException("Bad Request");
+
+        OrderManage orderManage = OrderManage.builder()
+                .omType(updateOrderByOwnerInDTO.getOmType())
+                .order(orderRepo.findById(updateOrderByOwnerInDTO.getOrderId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
+                .build();
+
+        orderManageRepo.save(orderManage);
+
+        return OrderManageMapper.orderManageMapper.toUpdateOrderByOwnerOutDTO(orderManage);
     }
 
     @Override
     public UpdateOrderByAdminOutDTO updateOrder(UpdateOrderByAdminInDTO updateOrderByAdminInDTO) {
-        return null;
+        if (!updateOrderByAdminInDTO.getOmType().equals(OmType.CANCEL))
+            throw new IllegalArgumentException("Bad Request");
+
+        OrderManage orderManage = OrderManage.builder()
+                .omType(updateOrderByAdminInDTO.getOmType())
+                .order(orderRepo.findById(updateOrderByAdminInDTO.getOrderId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
+                .build();
+
+        orderManageRepo.save(orderManage);
+
+        return OrderManageMapper.orderManageMapper.toUpdateOrderByAdminOutDTO(orderManage);
     }
 }
