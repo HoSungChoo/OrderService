@@ -2,6 +2,8 @@ package com.hozzi.order.domain.pay.mapper;
 
 import com.hozzi.order.domain.pay.dto.CreatePaymentOutDTO;
 import com.hozzi.order.domain.pay.dto.CreatePaymentOutDTO.CreatePaymentOutDTOBuilder;
+import com.hozzi.order.domain.pay.dto.DeletePaymentOutDTO;
+import com.hozzi.order.domain.pay.dto.DeletePaymentOutDTO.DeletePaymentOutDTOBuilder;
 import com.hozzi.order.domain.pay.dto.ReadPaymentOutDTO;
 import com.hozzi.order.domain.pay.dto.ReadPaymentOutDTO.ReadPaymentOutDTOBuilder;
 import com.hozzi.order.domain.pay.entity.Payment;
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-05-07T22:20:59+0900",
+    date = "2024-05-07T22:32:48+0900",
     comments = "version: 1.4.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.7.jar, environment: Java 21.0.2 (Oracle Corporation)"
 )
 @Component
@@ -54,5 +56,25 @@ public class PayMapperImpl implements PayMapper {
         createPaymentOutDTO.cancelAt( payment.getCancelAt() );
 
         return createPaymentOutDTO.build();
+    }
+
+    @Override
+    public DeletePaymentOutDTO toDeletePaymentOutDTO(Payment payment) {
+        if ( payment == null ) {
+            return null;
+        }
+
+        DeletePaymentOutDTOBuilder deletePaymentOutDTO = DeletePaymentOutDTO.builder();
+
+        deletePaymentOutDTO.paymentId( payment.getPaymentId() );
+        deletePaymentOutDTO.paymentName( payment.getPaymentName() );
+        deletePaymentOutDTO.state( payment.getState() );
+        deletePaymentOutDTO.discountRate( payment.getDiscountRate() );
+        deletePaymentOutDTO.rewardRate( payment.getRewardRate() );
+        deletePaymentOutDTO.createAt( payment.getCreateAt() );
+        deletePaymentOutDTO.updateAt( payment.getUpdateAt() );
+        deletePaymentOutDTO.cancelAt( payment.getCancelAt() );
+
+        return deletePaymentOutDTO.build();
     }
 }

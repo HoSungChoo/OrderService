@@ -21,29 +21,21 @@ public class PayController {
     @GetMapping()
     @Operation(summary = "결제수단 전체 조회", description = "결제수단을 추가할 수 있다.")
     public ResponseEntity<ReadPaymentOutDTOs> readPayments(){
-        ReadPaymentOutDTOs readPaymentOutDTOs = payService.readPayments();
-
-        return ResponseEntity.status(HttpStatus.OK).body(readPaymentOutDTOs);
+        return ResponseEntity.status(HttpStatus.OK).body(payService.readPayments());
     }
     @GetMapping("/id/{paymentId}")
     @Operation(summary = "특정 결제수단 조회", description = "결제수단을 추가할 수 있다.")
     public ResponseEntity<ReadPaymentOutDTO> readPayment(@PathVariable Long paymentId){
-        ReadPaymentOutDTO readPaymentOutDTO = payService.readPayment(paymentId);
-
-        return ResponseEntity.status(HttpStatus.OK).body(readPaymentOutDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(payService.readPayment(paymentId));
     }
     @PostMapping()
     @Operation(summary = "결제수단 추가", description = "결제수단을 추가할 수 있다.")
     public ResponseEntity<CreatePaymentOutDTO> createPayment(@RequestBody CreatePaymentInDTO createPaymentInDTO){
-        CreatePaymentOutDTO createPaymentOutDTO = payService.createPayment(createPaymentInDTO);
-
-        return ResponseEntity.status(HttpStatus.OK).body(createPaymentOutDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(payService.createPayment(createPaymentInDTO));
     }
     @PutMapping()
     @Operation(summary = "결제수단 해지", description = "결제수단을 해지할 수 있다.")
-    public ResponseEntity<HttpStatus> deletePayment(@RequestBody DeletePaymentInDTO deletePaymentInDTO){
-        payService.deletePayment(deletePaymentInDTO);
-
-        return ResponseEntity.status(HttpStatus.OK).build();
+    public ResponseEntity<DeletePaymentOutDTO> deletePayment(@RequestBody DeletePaymentInDTO deletePaymentInDTO){
+        return ResponseEntity.status(HttpStatus.OK).body(payService.deletePayment(deletePaymentInDTO));
     }
 }

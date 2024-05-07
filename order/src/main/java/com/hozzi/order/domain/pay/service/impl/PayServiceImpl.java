@@ -49,10 +49,12 @@ public class PayServiceImpl implements PayService {
     }
 
     @Override
-    public void deletePayment(DeletePaymentInDTO deletePaymentInDTO) {
+    public DeletePaymentOutDTO deletePayment(DeletePaymentInDTO deletePaymentInDTO) {
         Payment payment = payRepo.findById(deletePaymentInDTO.getPaymentId()).orElseThrow(()->new IllegalArgumentException("Bad Request"));
 
         payment.setState(State.CANCEL);
         payment.setCancelAt(LocalDateTime.now());
+
+        return PayMapper.payMapper.toDeletePaymentOutDTO(payment);
     }
 }

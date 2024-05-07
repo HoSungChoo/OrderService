@@ -6,5 +6,5 @@ public interface PayService {
     ReadPaymentOutDTOs readPayments();
     ReadPaymentOutDTO readPayment(Long paymentId);
     CreatePaymentOutDTO createPayment(CreatePaymentInDTO createPaymentInDTO);
-    void deletePayment(DeletePaymentInDTO deletePaymentInDTO);
+    DeletePaymentOutDTO deletePayment(DeletePaymentInDTO deletePaymentInDTO);
 }
