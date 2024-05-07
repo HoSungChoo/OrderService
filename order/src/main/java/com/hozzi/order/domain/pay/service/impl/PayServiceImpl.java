@@ -40,7 +40,7 @@ public class PayServiceImpl implements PayService {
                 .state(createPaymentInDTO.getState())
                 .discountRate(createPaymentInDTO.getDiscountRate())
                 .rewardRate(createPaymentInDTO.getRewardRate())
-                .cancelAt(LocalDateTime.MAX)
+                .cancelAt(LocalDateTime.of(2999, 12, 31, 0, 0, 0))
                 .build();
 
         payRepo.save(payment);

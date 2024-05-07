@@ -34,7 +34,7 @@ public class StoreServiceImpl implements StoreService {
                 .storeName(createStoreInDTO.getStoreName())
                 .storeType(createStoreInDTO.getStoreType())
                 .state(createStoreInDTO.getState())
-                .cancelAt(LocalDateTime.MAX)
+                .cancelAt(LocalDateTime.of(2999, 12, 31, 0, 0, 0))
                 .user(userRepo.findById(createStoreInDTO.getUserId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
                 .build();
 

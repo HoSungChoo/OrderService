@@ -33,7 +33,7 @@ public class MenuServiceImpl implements MenuService {
                 .menuName(createMenuInDTO.getMenuName())
                 .state(createMenuInDTO.getState())
                 .store(storeRepo.findById(createMenuInDTO.getStoreId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
-                .cancelAt(LocalDateTime.MAX)
+                .cancelAt(LocalDateTime.of(2999, 12, 31, 0, 0, 0))
                 .build();
 
         menuRepo.save(menu);
