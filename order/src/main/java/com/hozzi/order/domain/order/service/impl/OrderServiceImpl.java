@@ -15,12 +15,12 @@ import com.hozzi.order.domain.store.repo.MenuRepo;
 import com.hozzi.order.domain.store.repo.StoreRepo;
 import com.hozzi.order.domain.user.entity.Basket;
 import com.hozzi.order.domain.user.repo.BasketRepo;
+import com.hozzi.order.domain.user.repo.UserRepo;
 import com.hozzi.order.domain.user.repo.WalletRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -31,8 +31,9 @@ public class OrderServiceImpl implements OrderService {
     private final MenuRepo menuRepo;
     private final OptionRepo optionRepo;
     private final BasketRepo basketRepo;
+    private final UserRepo userRepo;
 
-    public OrderServiceImpl(OrderRepo orderRepo, OrderManageRepo orderManageRepo, WalletRepo walletRepo, StoreRepo storeRepo, MenuRepo menuRepo, OptionRepo optionRepo, BasketRepo basketRepo) {
+    public OrderServiceImpl(OrderRepo orderRepo, OrderManageRepo orderManageRepo, WalletRepo walletRepo, StoreRepo storeRepo, MenuRepo menuRepo, OptionRepo optionRepo, BasketRepo basketRepo, UserRepo userRepo) {
         this.orderRepo = orderRepo;
         this.orderManageRepo = orderManageRepo;
         this.walletRepo = walletRepo;
@@ -40,6 +41,7 @@ public class OrderServiceImpl implements OrderService {
         this.menuRepo = menuRepo;
         this.optionRepo = optionRepo;
         this.basketRepo = basketRepo;
+        this.userRepo = userRepo;
     }
 
     @Override
@@ -69,6 +71,7 @@ public class OrderServiceImpl implements OrderService {
         OrderManage orderManage = OrderManage.builder()
                 .omType(OmType.ORDER)
                 .order(orderRepo.findById(order.getOrderId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
+                .user(walletRepo.findById(createOrderInDTO.getWalletId()).orElseThrow(()->new IllegalArgumentException("Bad Request")).getUser())
                 .build();
 
         orderManageRepo.save(orderManage);
@@ -105,11 +108,12 @@ public class OrderServiceImpl implements OrderService {
         OrderManage orderManage = OrderManage.builder()
                 .omType(OmType.CANCEL)
                 .order(orderRepo.findById(updateOrderByCustomInDTO.getOrderId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
+                .user(userRepo.findById(updateOrderByCustomInDTO.getUserId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
                 .build();
 
         orderManageRepo.save(orderManage);
 
-        return OrderManageMapper.orderManageMapper.toUpdateOrderByCustomOutDTO(orderManage);
+        return OrderManageMapper.orderManageMapper.toUpdateOrderByCustomOutDTOCustom(orderManage);
     }
 
     @Override
@@ -125,11 +129,12 @@ public class OrderServiceImpl implements OrderService {
         OrderManage orderManage = OrderManage.builder()
                 .omType(updateOrderByOwnerInDTO.getOmType())
                 .order(orderRepo.findById(updateOrderByOwnerInDTO.getOrderId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
+                .user(userRepo.findById(updateOrderByOwnerInDTO.getUserId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
                 .build();
 
         orderManageRepo.save(orderManage);
 
-        return OrderManageMapper.orderManageMapper.toUpdateOrderByOwnerOutDTO(orderManage);
+        return OrderManageMapper.orderManageMapper.toUpdateOrderByOwnerOutDTOCustom(orderManage);
     }
 
     @Override
@@ -140,10 +145,11 @@ public class OrderServiceImpl implements OrderService {
         OrderManage orderManage = OrderManage.builder()
                 .omType(updateOrderByAdminInDTO.getOmType())
                 .order(orderRepo.findById(updateOrderByAdminInDTO.getOrderId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
+                .user(userRepo.findById(updateOrderByAdminInDTO.getUserId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
                 .build();
 
         orderManageRepo.save(orderManage);
 
-        return OrderManageMapper.orderManageMapper.toUpdateOrderByAdminOutDTO(orderManage);
+        return OrderManageMapper.orderManageMapper.toUpdateOrderByAdminOutDTOCustom(orderManage);
     }
 }

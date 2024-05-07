@@ -32,6 +32,8 @@ public class QOrderManage extends EntityPathBase<OrderManage> {
 
     public final DateTimePath<java.time.LocalDateTime> updateAt = createDateTime("updateAt", java.time.LocalDateTime.class);
 
+    public final com.hozzi.order.domain.user.entity.QUser user;
+
     public QOrderManage(String variable) {
         this(OrderManage.class, forVariable(variable), INITS);
     }
@@ -51,6 +53,7 @@ public class QOrderManage extends EntityPathBase<OrderManage> {
     public QOrderManage(Class<? extends OrderManage> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.order = inits.isInitialized("order") ? new QOrder(forProperty("order"), inits.get("order")) : null;
+        this.user = inits.isInitialized("user") ? new com.hozzi.order.domain.user.entity.QUser(forProperty("user")) : null;
     }
 
 }

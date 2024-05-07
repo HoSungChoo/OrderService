@@ -13,4 +13,28 @@ public interface OrderManageMapper {
     UpdateOrderByCustomOutDTO toUpdateOrderByCustomOutDTO(OrderManage orderManage);
     UpdateOrderByOwnerOutDTO toUpdateOrderByOwnerOutDTO(OrderManage orderManage);
     UpdateOrderByAdminOutDTO toUpdateOrderByAdminOutDTO(OrderManage orderManage);
+    default UpdateOrderByCustomOutDTO toUpdateOrderByCustomOutDTOCustom(OrderManage orderManage){
+        UpdateOrderByCustomOutDTO updateOrderByCustomOutDTO = orderManageMapper.toUpdateOrderByCustomOutDTOCustom(orderManage);
+
+        updateOrderByCustomOutDTO.setOrderId(orderManage.getOrder().getOrderId());
+        updateOrderByCustomOutDTO.setUserId(orderManage.getUser().getUserId());
+
+        return updateOrderByCustomOutDTO;
+    }
+    default UpdateOrderByOwnerOutDTO toUpdateOrderByOwnerOutDTOCustom(OrderManage orderManage){
+        UpdateOrderByOwnerOutDTO updateOrderByOwnerOutDTO = orderManageMapper.toUpdateOrderByOwnerOutDTOCustom(orderManage);
+
+        updateOrderByOwnerOutDTO.setOrderId(orderManage.getOrder().getOrderId());
+        updateOrderByOwnerOutDTO.setUserId(orderManage.getUser().getUserId());
+
+        return updateOrderByOwnerOutDTO;
+    }
+    default UpdateOrderByAdminOutDTO toUpdateOrderByAdminOutDTOCustom(OrderManage orderManage){
+        UpdateOrderByAdminOutDTO updateOrderByAdminOutDTO = orderManageMapper.toUpdateOrderByAdminOutDTOCustom(orderManage);
+
+        updateOrderByAdminOutDTO.setOrderId(orderManage.getOrder().getOrderId());
+        updateOrderByAdminOutDTO.setUserId(orderManage.getUser().getUserId());
+
+        return updateOrderByAdminOutDTO;
+    }
 }
