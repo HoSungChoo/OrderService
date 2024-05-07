@@ -3,11 +3,13 @@ package com.hozzi.order.domain.order.api;
 import com.hozzi.order.domain.order.dto.*;
 import com.hozzi.order.domain.order.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Tag(name = "OrderController", description = "주문 API")
 @RequestMapping(value = "/order")
 public class OrderController {
     private final OrderService orderService;

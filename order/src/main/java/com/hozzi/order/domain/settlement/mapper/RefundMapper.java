@@ -9,4 +9,13 @@ import org.mapstruct.factory.Mappers;
 public interface RefundMapper {
     RefundMapper refundMapper = Mappers.getMapper(RefundMapper.class);
     CreateRefundOutDTO toCreateRefundOutDTO(Refund refund);
+    default CreateRefundOutDTO toCreateRefundOutDTOCustom(Refund refund){
+        CreateRefundOutDTO createRefundOutDTO = refundMapper.toCreateRefundOutDTOCustom(refund);
+
+        createRefundOutDTO.setOrderId(refund.getOrder().getOrderId());
+        createRefundOutDTO.setCustomId(refund.getCustom().getUserId());
+        createRefundOutDTO.setOwnerId(refund.getOwner().getUserId());
+
+        return createRefundOutDTO;
+    }
 }

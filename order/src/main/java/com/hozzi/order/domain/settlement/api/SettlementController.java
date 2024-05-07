@@ -4,11 +4,13 @@ import com.hozzi.order.domain.settlement.dto.*;
 import com.hozzi.order.domain.settlement.service.RefundService;
 import com.hozzi.order.domain.settlement.service.SettlementService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Tag(name = "SettlementController", description = "정산 API")
 @RequestMapping(value = "/settlement")
 public class SettlementController {
     private final SettlementService settlementService;

@@ -9,27 +9,26 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface BasketMapper {
     BasketMapper basketMapper = Mappers.getMapper(BasketMapper.class);
-    default ReadBasketOutDTO toReadBasketOutDTO(Basket basket){
-        return ReadBasketOutDTO.builder()
-                .basketId(basket.getBasketId())
-                .userId(basket.getUser().getUserId())
-                .storeId(basket.getStore().getStoreId())
-                .menuId(basket.getMenu().getMenuId())
-                .amount(basket.getAmount())
-                .createAt(basket.getCreateAt())
-                .updateAt(basket.getUpdateAt())
-                .build();
+    ReadBasketOutDTO toReadBasketOutDTO(Basket basket);
+    CreateBasketOutDTO toCreateBasketOutDTO(Basket basket);
+    default ReadBasketOutDTO toReadBasketOutDTOCustom(Basket basket){
+        ReadBasketOutDTO readBasketOutDTO = basketMapper.toReadBasketOutDTO(basket);
+
+        readBasketOutDTO.setUserId(basket.getUser().getUserId());
+        readBasketOutDTO.setStoreId(basket.getStore().getStoreId());
+        readBasketOutDTO.setMenuId(basket.getMenu().getMenuId());
+
+        return readBasketOutDTO;
     }
-    default CreateBasketOutDTO toCreateBasketOutDTO(Basket basket){
-        return CreateBasketOutDTO.builder()
-                .basketId(basket.getBasketId())
-                .userId(basket.getUser().getUserId())
-                .storeId(basket.getStore().getStoreId())
-                .menuId(basket.getMenu().getMenuId())
-                .amount(basket.getAmount())
-                .createAt(basket.getCreateAt())
-                .updateAt(basket.getUpdateAt())
-                .build();
+
+    default CreateBasketOutDTO toCreateBasketOutDTOCustom(Basket basket){
+        CreateBasketOutDTO createBasketOutDTO = basketMapper.toCreateBasketOutDTO(basket);
+
+        createBasketOutDTO.setUserId(basket.getUser().getUserId());
+        createBasketOutDTO.setStoreId(basket.getStore().getStoreId());
+        createBasketOutDTO.setMenuId(basket.getMenu().getMenuId());
+
+        return createBasketOutDTO;
     }
 
 }

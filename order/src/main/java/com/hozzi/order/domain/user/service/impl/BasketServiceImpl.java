@@ -32,7 +32,7 @@ public class BasketServiceImpl implements BasketService {
     public ReadBasketOutDTO readBasketByBasketId(Long basketId) throws Exception {
         Basket basket = basketRepo.findById(basketId).orElseThrow(()->new IllegalArgumentException("Bad Request"));
 
-        return BasketMapper.basketMapper.toReadBasketOutDTO(basket);
+        return BasketMapper.basketMapper.toReadBasketOutDTOCustom(basket);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class BasketServiceImpl implements BasketService {
 
         basketRepo.save(basket);
 
-        return BasketMapper.basketMapper.toCreateBasketOutDTO(basket);
+        return BasketMapper.basketMapper.toCreateBasketOutDTOCustom(basket);
     }
 
     @Override
