@@ -13,7 +13,8 @@ import java.time.LocalDateTime;
 public class CreateRefundOutDTO {
     private Long refundId;
     private Long orderId;
-    private Long userId;
+    private Long customId;
+    private Long ownerId;
     private Long customBalance;
     private Long ownerBalance;
     private RefundType refundType;

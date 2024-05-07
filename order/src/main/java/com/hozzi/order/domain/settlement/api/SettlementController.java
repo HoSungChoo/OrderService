@@ -16,10 +16,9 @@ public class SettlementController {
     }
 
     @PostMapping("/reward")
-    //@Operation(summary = "", description = "")
     @Operation(summary = "적립금 추가", description = "주문을 기반으로 적립금을 기록한다.")
     private ResponseEntity<CreateRewardOutDTO> createReward(@RequestBody CreateRewardInDTO createRewardInDTO){
-
+        settlementService.createReward(createRewardInDTO);
         return ResponseEntity.status(HttpStatus.OK).body(new CreateRewardOutDTO());
     }
     @PostMapping("/payout")
@@ -34,17 +33,17 @@ public class SettlementController {
     }
     @GetMapping("/reward")
     @Operation(summary = "적립금 확인", description = "기간별 적립금을 확인한다. 관리자만 확인 가능하다.")
-    private ResponseEntity<ReadRewardOutDTO> readReward(@PathVariable("beginDate") String beginDate, @PathVariable("endDate") String endDate){
+    private ResponseEntity<ReadSettlementOutDTOs> readReward(@PathVariable("beginDate") String beginDate, @PathVariable("endDate") String endDate){
         return null;
     }
-    @GetMapping("/reward")
+    @GetMapping("/payout")
     @Operation(summary = "지급금 확인", description = "기간별 적립금을 확인한다. 관리자만 확인 가능하다.")
-    private ResponseEntity<ReadPayoutOutDTO> readPayout(@PathVariable("beginDate") String beginDate, @PathVariable("endDate") String endDate){
+    private ResponseEntity<ReadSettlementOutDTOs> readPayout(@PathVariable("beginDate") String beginDate, @PathVariable("endDate") String endDate){
         return null;
     }
-    @GetMapping("/reward")
+    @GetMapping("/refund")
     @Operation(summary = "환불금 확인", description = "기간별 환불금을 확인한다. 관리자만 확인 가능하다.")
-    private ResponseEntity<ReadRefundOutDTO> readRefund(@PathVariable("beginDate") String beginDate, @PathVariable("endDate") String endDate){
+    private ResponseEntity<ReadRefundOutDTOs> readRefund(@PathVariable("beginDate") String beginDate, @PathVariable("endDate") String endDate){
         return null;
     }
 }

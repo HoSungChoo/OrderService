@@ -28,6 +28,8 @@ public class QRefund extends EntityPathBase<Refund> {
 
     public final NumberPath<Long> customBalance = createNumber("customBalance", Long.class);
 
+    public final com.hozzi.order.domain.order.entity.QOrder order;
+
     public final com.hozzi.order.domain.user.entity.QUser owner;
 
     public final NumberPath<Long> ownerBalance = createNumber("ownerBalance", Long.class);
@@ -59,6 +61,7 @@ public class QRefund extends EntityPathBase<Refund> {
     public QRefund(Class<? extends Refund> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.custom = inits.isInitialized("custom") ? new com.hozzi.order.domain.user.entity.QUser(forProperty("custom")) : null;
+        this.order = inits.isInitialized("order") ? new com.hozzi.order.domain.order.entity.QOrder(forProperty("order"), inits.get("order")) : null;
         this.owner = inits.isInitialized("owner") ? new com.hozzi.order.domain.user.entity.QUser(forProperty("owner")) : null;
     }
 

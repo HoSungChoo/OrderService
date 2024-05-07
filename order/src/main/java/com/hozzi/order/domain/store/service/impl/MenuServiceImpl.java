@@ -6,10 +6,11 @@ import com.hozzi.order.domain.store.mapper.MenuMapper;
 import com.hozzi.order.domain.store.repo.MenuRepo;
 import com.hozzi.order.domain.store.repo.StoreRepo;
 import com.hozzi.order.domain.store.service.MenuService;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+@Service
 public class MenuServiceImpl implements MenuService {
     private final MenuRepo menuRepo;
     private final StoreRepo storeRepo;

@@ -10,4 +10,5 @@ public interface CustomBasketRepo {
     Optional<List<ReadBasketOutDTO>> findBy(Long userId);
     void deleteByUserId(Long userId);
     void deleteByBasketId(Long basketId);
+    Optional<List<Basket>> findByUserId(Long userId);
 }
