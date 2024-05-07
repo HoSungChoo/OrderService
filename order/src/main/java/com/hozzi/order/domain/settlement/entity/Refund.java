@@ -1,5 +1,6 @@
 package com.hozzi.order.domain.settlement.entity;
 
+import com.hozzi.order.domain.order.entity.Order;
 import com.hozzi.order.domain.user.entity.User;
 import com.hozzi.order.domain.settlement.enumerate.RefundType;
 import jakarta.persistence.*;
@@ -41,4 +42,7 @@ public class Refund {
     @ManyToOne(optional = false)
     @JoinColumn(name = "owner_id")
     private User owner;
+    @OneToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
 }
