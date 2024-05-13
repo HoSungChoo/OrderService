@@ -19,12 +19,12 @@ public class PayController {
     }
 
     @GetMapping()
-    @Operation(summary = "결제수단 전체 조회", description = "결제수단을 추가할 수 있다.")
+    @Operation(summary = "결제수단 전체 조회", description = "결제수단 전체를 조회한다.")
     public ResponseEntity<ReadPaymentOutDTOs> readPayments(){
         return ResponseEntity.status(HttpStatus.OK).body(payService.readPayments());
     }
     @GetMapping("/id/{paymentId}")
-    @Operation(summary = "특정 결제수단 조회", description = "결제수단을 추가할 수 있다.")
+    @Operation(summary = "특정 결제수단 조회", description = "특정 결제수단을 조회한다.")
     public ResponseEntity<ReadPaymentOutDTO> readPayment(@PathVariable Long paymentId){
         return ResponseEntity.status(HttpStatus.OK).body(payService.readPayment(paymentId));
     }
