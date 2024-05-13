@@ -19,7 +19,7 @@ public class CustomPayRepoImpl implements CustomPayRepo {
     private final QPayment qPayment = QPayment.payment;
 
     @Override
-    public Optional<List<ReadPaymentOutDTO>> findAllByC() {
+    public Optional<List<ReadPaymentOutDTO>> findAllCustom() {
         return Optional.of(new JPAQuery<>(em)
                 .select(Projections.constructor(ReadPaymentOutDTO.class,
                         qPayment.paymentId,

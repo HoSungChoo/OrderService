@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PayRepo extends JpaRepository<Payment, Long>, CustomPayRepo {
-
+    boolean existsByPaymentName(String paymentName);
 }

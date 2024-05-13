@@ -21,7 +21,7 @@ public class PayServiceImpl implements PayService {
 
     @Override
     public ReadPaymentOutDTOs readPayments() {
-        List<ReadPaymentOutDTO> readPaymentOutDTOs = payRepo.findAllByC().orElseThrow(()->new IllegalArgumentException("Bad Request"));
+        List<ReadPaymentOutDTO> readPaymentOutDTOs = payRepo.findAllCustom().orElseThrow(()->new IllegalArgumentException("Bad Request"));
 
         return ReadPaymentOutDTOs.builder().payments(readPaymentOutDTOs).build();
     }
@@ -35,6 +35,9 @@ public class PayServiceImpl implements PayService {
 
     @Override
     public CreatePaymentOutDTO createPayment(CreatePaymentInDTO createPaymentInDTO) {
+        if (payRepo.existsByPaymentName(createPaymentInDTO.getPaymentName()))
+            throw new IllegalArgumentException("Duplicated paymentName");
+
         Payment payment = Payment.builder()
                 .paymentName(createPaymentInDTO.getPaymentName())
                 .state(createPaymentInDTO.getState())
