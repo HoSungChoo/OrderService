@@ -75,7 +75,7 @@ class StoreControllerTest {
                         .stores(readStoreOutDTOS)
                         .build());
 
-        mockMvc.perform(get("/pay/" + 100))
+        mockMvc.perform(get("/store/" + 100))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.stores[0].storeId").exists())
                 .andExpect(jsonPath("$.stores[0].storeName").exists())
