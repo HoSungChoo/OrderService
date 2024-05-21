@@ -55,6 +55,9 @@ public class PayServiceImpl implements PayService {
     public DeletePaymentOutDTO deletePayment(DeletePaymentInDTO deletePaymentInDTO) {
         Payment payment = payRepo.findById(deletePaymentInDTO.getPaymentId()).orElseThrow(()->new IllegalArgumentException("Bad Request"));
 
+        if (payment.getState().equals(State.CANCEL))
+            throw new IllegalArgumentException("Already Canceled");
+
         payment.setState(State.CANCEL);
         payment.setCancelAt(LocalDateTime.now());
 

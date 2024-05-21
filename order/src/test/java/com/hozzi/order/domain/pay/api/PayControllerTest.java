@@ -266,6 +266,25 @@ class PayControllerTest {
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalArgumentException))
                 .andDo(print())
                 .andReturn();
+    }
+    @Test
+    @DisplayName("deletePayment_AlreadyDeleted_Exception")
+    void deletePayment_AlreadyDeleted_Exception() throws Exception {
+        Long paymentId = 100L;
+        DeletePaymentInDTO deletePaymentInDTO = DeletePaymentInDTO.builder()
+                .paymentId(paymentId)
+                .build();
+        given(payService.deletePayment(deletePaymentInDTO))
+                .willThrow(new IllegalArgumentException("Already Canceled"));
 
+        String content = objectMapper.writeValueAsString(deletePaymentInDTO);
+
+        mockMvc.perform(put("/pay")
+                        .content(content)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalArgumentException))
+                .andDo(print())
+                .andReturn();
     }
 }
