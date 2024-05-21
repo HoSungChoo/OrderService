@@ -134,18 +134,53 @@ class StoreControllerTest {
     }
 
     @Test
-    void updateStore() {
+    @DisplayName("updateStore_Normal_Success")
+    void updateStore_Normal_Success() {
+
     }
 
     @Test
-    void readMenu() {
+    @DisplayName("updateStore_NotExistStoreId_Exception")
+    void updateStore_NotExistStoreId_Exception() {
+
     }
 
     @Test
-    void createMenu() {
-    }
+    @DisplayName("updateStore_NotExistUserId_Exception")
+    void updateStore_NotExistUserId_Exception() {
 
+    }
     @Test
-    void updateMenu() {
+    @DisplayName("updateStore_NotMatchedStoreIdAndUserId_Exception")
+    void updateStore_NotMatchedStoreIdAndUserId_Exception() {
+
+    }
+    @Test
+    @DisplayName("readMenu_Normal_Success")
+    void readMenu_Normal_Success() {
+
+    }
+    @Test
+    @DisplayName("readMenu_NotExistStoreId")
+    void readMenu_NotExistStoreId() {
+
+    }
+    @Test
+    @DisplayName("createMenu_Normal_Success")
+    void createMenu_Normal_Success() {
+    }
+    @Test
+    @DisplayName("updateMenu_Normal_Success")
+    void updateMenu_Normal_Success() {
+
+    }
+    @Test
+    @DisplayName("updateMenu_NotExistMenuId_Exception")
+    void updateMenu_NotExistMenuId_Exception() {
+    }
+    @Test
+    @DisplayName("updateMenu_NotMatchedMenuIdAndStoreId_Exception")
+    void updateMenu_NotMatchedMenuIdAndStoreId_Exception() {
+
     }
 }
