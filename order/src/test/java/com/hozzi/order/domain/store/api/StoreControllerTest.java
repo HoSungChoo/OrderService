@@ -1,13 +1,23 @@
 package com.hozzi.order.domain.store.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hozzi.order.domain.store.dto.ReadStoreOutDTO;
+import com.hozzi.order.domain.store.dto.ReadStoreOutDTOs;
+import com.hozzi.order.domain.store.enumerate.StoreType;
 import com.hozzi.order.domain.store.service.MenuService;
 import com.hozzi.order.domain.store.service.StoreService;
+import com.hozzi.order.global.enumerate.State;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+
+import javax.net.ssl.SSLEngineResult;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
@@ -31,8 +41,55 @@ class StoreControllerTest {
     @MockBean
     MenuService menuService;
     @Test
-    void readStore() {
-        
+    @DisplayName("readStore_Normal_Success")
+    void readStore_Normal_Success() throws Exception {
+        Long userId = 100L;
+
+        List<ReadStoreOutDTO> readStoreOutDTOS = new ArrayList<>();
+
+        readStoreOutDTOS.add(ReadStoreOutDTO.builder()
+                        .storeId(1L)
+                        .storeName("store 1L")
+                        .storeType(StoreType.SNACK)
+                        .state(State.ENROLL)
+                        .createAt(LocalDateTime.now())
+                        .updateAt(LocalDateTime.now())
+                        .cancelAt(LocalDateTime.now())
+                .build());
+
+        readStoreOutDTOS.add(ReadStoreOutDTO.builder()
+                .storeId(2L)
+                .storeName("store 2L")
+                .storeType(StoreType.CHINESE)
+                .state(State.ENROLL)
+                .createAt(LocalDateTime.now())
+                .updateAt(LocalDateTime.now())
+                .cancelAt(LocalDateTime.now())
+                .build());
+
+        given(storeService.readStore(userId))
+                .willReturn(ReadStoreOutDTOs
+                        .builder()
+                        .stores(readStoreOutDTOS)
+                        .build());
+
+        mockMvc.perform(get("/pay/" + 100))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.stores[0].storeId").exists())
+                .andExpect(jsonPath("$.stores[0].storeName").exists())
+                .andExpect(jsonPath("$.stores[0].storeType").exists())
+                .andExpect(jsonPath("$.stores[0].state").exists())
+                .andExpect(jsonPath("$.stores[0].createAt").exists())
+                .andExpect(jsonPath("$.stores[0].updateAt").exists())
+                .andExpect(jsonPath("$.stores[0].cancelAt").exists())
+                .andExpect(jsonPath("$.stores[1].storeId").exists())
+                .andExpect(jsonPath("$.stores[1].storeName").exists())
+                .andExpect(jsonPath("$.stores[1].storeType").exists())
+                .andExpect(jsonPath("$.stores[1].state").exists())
+                .andExpect(jsonPath("$.stores[1].createAt").exists())
+                .andExpect(jsonPath("$.stores[1].updateAt").exists())
+                .andExpect(jsonPath("$.stores[1].cancelAt").exists())
+                .andDo(print());
     }
 
     @Test
