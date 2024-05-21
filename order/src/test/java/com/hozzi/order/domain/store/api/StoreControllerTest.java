@@ -1,6 +1,9 @@
 package com.hozzi.order.domain.store.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hozzi.order.domain.store.dto.CreateStoreInDTO;
+import com.hozzi.order.domain.store.dto.CreateStoreOutDTO;
 import com.hozzi.order.domain.store.dto.ReadStoreOutDTO;
 import com.hozzi.order.domain.store.dto.ReadStoreOutDTOs;
 import com.hozzi.order.domain.store.enumerate.StoreType;
@@ -12,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import javax.net.ssl.SSLEngineResult;
@@ -44,7 +48,6 @@ class StoreControllerTest {
     @DisplayName("readStore_Normal_Success")
     void readStore_Normal_Success() throws Exception {
         Long userId = 100L;
-
         List<ReadStoreOutDTO> readStoreOutDTOS = new ArrayList<>();
 
         readStoreOutDTOS.add(ReadStoreOutDTO.builder()
@@ -93,7 +96,41 @@ class StoreControllerTest {
     }
 
     @Test
-    void createStore() {
+    @DisplayName("createStore_Normal_Success")
+    void createStore_Normal_Success() throws Exception {
+        CreateStoreInDTO createStoreInDTO = CreateStoreInDTO.builder()
+                .userId(100L)
+                .storeType(StoreType.KOREAN)
+                .storeName("store Name")
+                .state(State.ENROLL)
+                .build();
+
+        given(storeService.createStore(createStoreInDTO))
+                .willReturn(CreateStoreOutDTO.builder()
+                        .storeId(200L)
+                        .storeType(StoreType.KOREAN)
+                        .storeName("store Name")
+                        .state(State.ENROLL)
+                        .createAt(LocalDateTime.now())
+                        .updateAt(LocalDateTime.now())
+                        .cancelAt(LocalDateTime.now())
+                        .build());
+
+        String content = objectMapper.writeValueAsString(createStoreInDTO);
+
+        mockMvc.perform(post("/store")
+                .content(content)
+                        .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.storeId").exists())
+                .andExpect(jsonPath("$.storeName").exists())
+                .andExpect(jsonPath("$.storeType").exists())
+                .andExpect(jsonPath("$.state").exists())
+                .andExpect(jsonPath("$.createAt").exists())
+                .andExpect(jsonPath("$.updateAt").exists())
+                .andExpect(jsonPath("$.cancelAt").exists())
+                .andDo(print());
     }
 
     @Test
