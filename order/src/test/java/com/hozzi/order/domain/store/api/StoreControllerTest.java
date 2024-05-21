@@ -32,7 +32,7 @@ class StoreControllerTest {
     MenuService menuService;
     @Test
     void readStore() {
-        System.out.println();
+        
     }
 
     @Test
