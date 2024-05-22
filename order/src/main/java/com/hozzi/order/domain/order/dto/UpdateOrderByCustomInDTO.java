@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
 public class UpdateOrderByCustomInDTO {
     private Long orderId;
     private Long userId;

@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
 public class UpdateOrderByOwnerInDTO {
     private Long orderId;
     private Long userId;

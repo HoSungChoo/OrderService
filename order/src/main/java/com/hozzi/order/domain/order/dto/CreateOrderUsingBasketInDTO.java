@@ -7,6 +7,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
 public class CreateOrderUsingBasketInDTO {
     private Long userId;
     private Long walletId;
