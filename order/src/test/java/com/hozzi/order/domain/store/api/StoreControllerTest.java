@@ -404,9 +404,9 @@ class StoreControllerTest {
         String content = objectMapper.writeValueAsString(updateMenuInDTO);
 
         mockMvc.perform(put("/store/menu")
-                .content(content)
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON))
+                        .content(content)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof IllegalArgumentException))
                 .andReturn();
     }
