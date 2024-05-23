@@ -101,7 +101,7 @@ class UserServiceTest {
                 .userId(100L)
                 .gender(Gender.Male)
                 .userName("hozzi")
-                .age(20)
+                .age(30)
                 .build();
 
         Mockito.when(userRepo.findById(updateUserInDTO.getUserId()))
@@ -109,7 +109,7 @@ class UserServiceTest {
                         .userId(100L)
                         .userName("hozzi_origin")
                         .userType(UserType.USER)
-                        .age(30)
+                        .age(20)
                         .point(200L)
                         .balance(200L)
                         .gender(Gender.Female)
@@ -120,11 +120,11 @@ class UserServiceTest {
         // when
         UpdateUserOutDTO updateUserOutDTO = userService.updateUser(updateUserInDTO);
 
-        // then
+        // then - input 값대로 변경되어야 한다.
         Assertions.assertEquals(updateUserOutDTO.getUserId(), 100L);
         Assertions.assertEquals(updateUserOutDTO.getGender(), Gender.Male);
         Assertions.assertEquals(updateUserOutDTO.getUserName(), "hozzi");
-        Assertions.assertEquals(updateUserOutDTO.getAge(), 20);
+        Assertions.assertEquals(updateUserOutDTO.getAge(), 30);
         Assertions.assertEquals(updateUserOutDTO.getUserType(), UserType.USER);
         Assertions.assertEquals(updateUserOutDTO.getBalance(), 200L);
         Assertions.assertEquals(updateUserOutDTO.getPoint(), 200L);
