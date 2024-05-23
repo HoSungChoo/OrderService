@@ -17,7 +17,6 @@ public class OrderController {
         this.orderService = orderService;
     }
     @GetMapping("/{orderId}")
-    //@Operation(summary = "", description = "")
     @Operation(summary = "주문 진행상황 조회", description = "주문별 진행상황을 조회한다.")
     public ResponseEntity<ReadOrderManageOutDTOs> readOrderManage(@PathVariable Long orderId){
         return ResponseEntity.status(HttpStatus.OK).body(orderService.readOrderManage(orderId));
