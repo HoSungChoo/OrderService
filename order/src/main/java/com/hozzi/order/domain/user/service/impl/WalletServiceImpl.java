@@ -47,6 +47,7 @@ public class WalletServiceImpl implements WalletService {
                 .build();
 
         walletRepo.save(wallet);
+
         return WalletMapper.walletMapper.toCreateWalletOutDTO(wallet);
     }
 
