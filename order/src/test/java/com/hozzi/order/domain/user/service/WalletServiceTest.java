@@ -2,10 +2,7 @@ package com.hozzi.order.domain.user.service;
 
 import com.hozzi.order.domain.pay.entity.Payment;
 import com.hozzi.order.domain.pay.repo.PayRepo;
-import com.hozzi.order.domain.user.dto.CreateWalletInDTO;
-import com.hozzi.order.domain.user.dto.CreateWalletOutDTO;
-import com.hozzi.order.domain.user.dto.ReadWalletOutDTO;
-import com.hozzi.order.domain.user.dto.ReadWalletOutDTOs;
+import com.hozzi.order.domain.user.dto.*;
 import com.hozzi.order.domain.user.entity.User;
 import com.hozzi.order.domain.user.entity.Wallet;
 import com.hozzi.order.domain.user.enumerate.Gender;
@@ -40,8 +37,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 class WalletServiceTest {
     private UserRepo userRepo = Mockito.mock(UserRepo.class);
@@ -122,8 +118,8 @@ class WalletServiceTest {
     }
 
     @Test
-    @DisplayName("readWallet_readQuitedUser_Success")
-    void readWallet_readQuitedUser_Success() throws Exception {
+    @DisplayName("readWallet_readQuitedUser_Exception")
+    void readWallet_readQuitedUser_Exception() throws Exception {
         // given
         Long userId = 100L;
         LocalDateTime createAt = LocalDateTime.now();
@@ -182,14 +178,6 @@ class WalletServiceTest {
                 .cancelAt(cancelAt)
                 .build();
 
-        Wallet wallet = Wallet.builder()
-                .walletId(100L)
-                .state(State.ENROLL)
-                .user(user)
-                .payment(payment)
-                .build();
-
-        Mockito.when(walletRepo.save(wallet)).thenReturn(wallet);
         Mockito.when(userRepo.findById(100L)).thenReturn(Optional.ofNullable(user));
         Mockito.when(payRepo.findById(100L)).thenReturn(Optional.ofNullable(payment));
         Mockito.when(walletMapper.toCreateWalletOutDTO(any(Wallet.class))).thenReturn(CreateWalletOutDTO.builder()
@@ -209,13 +197,101 @@ class WalletServiceTest {
     }
 
     @Test
-    @DisplayName("createWallet")
-    void createWallet() {
+    @DisplayName("createWallet_NotExistUserId_Exception")
+    void createWallet_NotExistUserId_Exception() {
+        Long userId = 100L;
+
+        Mockito.when(userRepo.findById(userId)).thenThrow(new IllegalArgumentException("Bad Request"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> userRepo.findById(userId));
+    }
+
+    @Test
+    @DisplayName("createWallet_NotExistPaymentId_Exception")
+    void createWallet_NotExistPaymentId_Exception() {
+        Long userId = 100L;
+
+        Mockito.when(payRepo.findById(100L)).thenThrow(new IllegalArgumentException("Bad Request"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> userRepo.findById(userId));
     }
 
     @Test
     @DisplayName("deleteWallet_Normal_Success")
-    void deleteWallet_Normal_Success() {
+    void deleteWallet_Normal_Success() throws Exception {
+        // given
+        LocalDateTime createAt = LocalDateTime.now();
+        LocalDateTime updateAt = LocalDateTime.now();
+        LocalDateTime cancelAt = LocalDateTime.now();
+
+        DeleteWalletInDTO deleteWalletInDTO = DeleteWalletInDTO.builder()
+                .userId(100L)
+                .paymentId(100L)
+                .build();
+
+        User user = User.builder()
+                .userId(100L)
+                .userName("hozzi")
+                .userType(UserType.QUIT)
+                .age(20)
+                .point(100L)
+                .balance(100L)
+                .gender(Gender.Male)
+                .createAt(createAt)
+                .updateAt(updateAt)
+                .build();
+
+        Payment payment = Payment.builder()
+                .paymentId(100L)
+                .paymentName("hozzi pay")
+                .state(State.ENROLL)
+                .discountRate(0.7F)
+                .rewardRate(0.7F)
+                .createAt(createAt)
+                .updateAt(updateAt)
+                .cancelAt(cancelAt)
+                .build();
+
+        Mockito.when(walletRepo.findBy(deleteWalletInDTO))
+                .thenReturn(Optional.ofNullable(Wallet.builder()
+                        .walletId(100L)
+                        .state(State.ENROLL)
+                        .user(user)
+                        .payment(payment)
+                        .build()));
+
+        Mockito.when(walletMapper.toCreateWalletOutDTO(any(Wallet.class)))
+                .thenReturn(CreateWalletOutDTO.builder()
+                .walletId(100L)
+                .state(State.ENROLL)
+                .userId(100L)
+                .createAt(createAt)
+                .updateAt(updateAt)
+                .build());
+
+        Mockito.when(walletMapper.toDeleteWalletOutDTOCustom(any(Wallet.class)))
+                .thenReturn(DeleteWalletOutDTO.builder()
+                        .walletId(100L)
+                        .paymentId(100L)
+                        .paymentName("hozzi pay")
+                        .state(State.ENROLL)
+                        .discountRate(0.7F)
+                        .rewardRate(0.7F)
+                        .createAt(createAt)
+                        .updateAt(updateAt)
+                        .cancelAt(cancelAt)
+                        .build());
+        // when
+        DeleteWalletOutDTO deleteWalletOutDTO = walletService.deleteWallet(deleteWalletInDTO);
+
+        // then
+        Assertions.assertEquals(deleteWalletOutDTO.getWalletId(), 100L);
+        Assertions.assertEquals(deleteWalletOutDTO.getPaymentId(), 100L);
+        Assertions.assertEquals(deleteWalletOutDTO.getPaymentName(), "hozzi pay");
+        Assertions.assertEquals(deleteWalletOutDTO.getState(), State.ENROLL);
+        Assertions.assertEquals(deleteWalletOutDTO.getDiscountRate(), 0.7F);
+        Assertions.assertEquals(deleteWalletOutDTO.getRewardRate(), 0.7F);
+        Assertions.assertEquals(deleteWalletOutDTO.getCreateAt(), createAt);
+        Assertions.assertEquals(deleteWalletOutDTO.getUpdateAt(), updateAt);
+        Assertions.assertEquals(deleteWalletOutDTO.getCancelAt(), cancelAt);
     }
 
     @Test

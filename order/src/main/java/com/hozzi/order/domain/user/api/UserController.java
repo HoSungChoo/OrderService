@@ -63,10 +63,10 @@ public class UserController {
     }
     @PutMapping("/pay")
     @Operation(summary = "고객 결제수단 해지", description = "사용자(고객)는 결제수단을 해지한다.")
-    public ResponseEntity<HttpStatus> deleteWallet(@RequestBody DeleteWalletInDTO deleteWalletInDTO) throws Exception {
-        walletService.deleteWallet(deleteWalletInDTO);
+    public ResponseEntity<DeleteWalletOutDTO> deleteWallet(@RequestBody DeleteWalletInDTO deleteWalletInDTO) throws Exception {
+        DeleteWalletOutDTO deleteWalletOutDTO = walletService.deleteWallet(deleteWalletInDTO);
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(deleteWalletOutDTO);
     }
     @GetMapping("/item/{basketId}")
     @Operation(summary = "장바구니 특정 조회", description = "장바구니 ID를 기준으로 조회한다.")

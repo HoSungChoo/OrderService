@@ -52,10 +52,12 @@ public class WalletServiceImpl implements WalletService {
     }
 
     @Override
-    public void deleteWallet(DeleteWalletInDTO deleteWalletInDTO) throws Exception {
+    public DeleteWalletOutDTO deleteWallet(DeleteWalletInDTO deleteWalletInDTO) throws Exception {
         Wallet wallet = walletRepo.findBy(deleteWalletInDTO).orElseThrow(()->new IllegalArgumentException("Bad Request"));
         wallet.setState(State.CANCEL);
 
         walletRepo.flush();
+
+        return WalletMapper.walletMapper.toDeleteWalletOutDTOCustom(wallet);
     }
 }
