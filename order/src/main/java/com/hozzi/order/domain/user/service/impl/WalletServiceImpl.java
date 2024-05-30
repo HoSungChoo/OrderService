@@ -28,7 +28,7 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public ReadWalletOutDTOs readWallet(Long userId) throws Exception {
-        User user = userRepo.findById(userId).orElseThrow(()->new IllegalArgumentException("Bad Request"));
+        User user = userRepo.findById(userId).orElseThrow(()->new IllegalArgumentException("can not find user"));
 
         if (user.getUserType().equals(UserType.QUIT))
             throw new IllegalArgumentException("user quit");
