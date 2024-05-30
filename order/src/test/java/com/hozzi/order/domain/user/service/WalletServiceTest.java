@@ -21,31 +21,32 @@ class WalletServiceTest {
         walletService = new WalletServiceImpl(userRepo, walletRepo, payRepo);
     }
     @Test
-    @DisplayName("")
+    @DisplayName("readWallet_Normal_Success")
     void readWallet_Normal_Success() {
+
     }
     @Test
-    @DisplayName("")
+    @DisplayName("readWallet_NotExistUserId_Exception")
     void readWallet_NotExistUserId_Exception() {
     }
     @Test
-    @DisplayName("")
+    @DisplayName("readWallet_readQuitedUser_Success")
     void readWallet_readQuitedUser_Success() {
     }
     @Test
-    @DisplayName("")
+    @DisplayName("createWallet_Normal_Success")
     void createWallet_Normal_Success() {
     }
     @Test
-    @DisplayName("")
+    @DisplayName("createWallet")
     void createWallet() {
     }
     @Test
-    @DisplayName("")
+    @DisplayName("deleteWallet_Normal_Success")
     void deleteWallet_Normal_Success() {
     }
     @Test
-    @DisplayName("")
+    @DisplayName("deleteWallet_NotExistUserId_Exception")
     void deleteWallet_NotExistUserId_Exception() {
     }
 }
