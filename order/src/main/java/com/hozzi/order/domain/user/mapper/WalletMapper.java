@@ -10,14 +10,15 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring", imports = {Wallet.class, User.class})
 public interface WalletMapper {
-    WalletMapper walletMapper = Mappers.getMapper(WalletMapper.class);
-    @Mapping(target = "userId", source = "wallet.user.userId")
+    //WalletMapper walletMapper = Mappers.getMapper(WalletMapper.class);
+    //@Mapping(target = "userId", source = "wallet.user.userId")
     CreateWalletOutDTO toCreateWalletOutDTO(Wallet wallet);
     DeleteWalletOutDTO toDeleteWalletOutDTO(Wallet wallet);
     default DeleteWalletOutDTO toDeleteWalletOutDTOCustom(Wallet wallet){
-        DeleteWalletOutDTO deleteWalletOutDTO = walletMapper.toDeleteWalletOutDTO(wallet);
+        DeleteWalletOutDTO deleteWalletOutDTO = toDeleteWalletOutDTO(wallet);
         deleteWalletOutDTO.setPaymentId(wallet.getPayment().getPaymentId());
 
+        System.out.println("BAHAMA : " + wallet.getPayment().getPaymentId());
         return deleteWalletOutDTO;
     }
 }

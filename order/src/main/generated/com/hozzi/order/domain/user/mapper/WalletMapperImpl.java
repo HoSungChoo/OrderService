@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-05-30T18:07:13+0900",
+    date = "2024-06-04T20:55:56+0900",
     comments = "version: 1.4.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.7.jar, environment: Java 21.0.2 (Oracle Corporation)"
 )
 @Component
@@ -25,7 +25,6 @@ public class WalletMapperImpl implements WalletMapper {
 
         CreateWalletOutDTOBuilder createWalletOutDTO = CreateWalletOutDTO.builder();
 
-        createWalletOutDTO.userId( walletUserUserId( wallet ) );
         createWalletOutDTO.walletId( wallet.getWalletId() );
         createWalletOutDTO.state( wallet.getState() );
         createWalletOutDTO.createAt( wallet.getCreateAt() );
@@ -48,20 +47,5 @@ public class WalletMapperImpl implements WalletMapper {
         deleteWalletOutDTO.updateAt( wallet.getUpdateAt() );
 
         return deleteWalletOutDTO.build();
-    }
-
-    private Long walletUserUserId(Wallet wallet) {
-        if ( wallet == null ) {
-            return null;
-        }
-        User user = wallet.getUser();
-        if ( user == null ) {
-            return null;
-        }
-        Long userId = user.getUserId();
-        if ( userId == null ) {
-            return null;
-        }
-        return userId;
     }
 }

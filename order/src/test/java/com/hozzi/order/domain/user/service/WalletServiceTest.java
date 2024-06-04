@@ -8,7 +8,6 @@ import com.hozzi.order.domain.user.entity.Wallet;
 import com.hozzi.order.domain.user.enumerate.Gender;
 import com.hozzi.order.domain.user.enumerate.UserType;
 import com.hozzi.order.domain.user.mapper.WalletMapper;
-import com.hozzi.order.domain.user.mapper.WalletMapperImpl;
 import com.hozzi.order.domain.user.repo.UserRepo;
 import com.hozzi.order.domain.user.repo.WalletRepo;
 import com.hozzi.order.domain.user.service.impl.WalletServiceImpl;
@@ -17,25 +16,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mapstruct.factory.Mappers;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.util.ReflectionTestUtils;
 
-import static org.mockito.BDDMockito.given;
-
-import java.awt.color.ICC_Profile;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -43,15 +30,15 @@ class WalletServiceTest {
     private UserRepo userRepo = Mockito.mock(UserRepo.class);
     private WalletRepo walletRepo = Mockito.mock(WalletRepo.class);
     private PayRepo payRepo = Mockito.mock(PayRepo.class);
-
-    @InjectMocks
+    //@Spy
+    //private WalletMapper walletMapper = Mappers.getMapper(WalletMapper.class);
     private WalletMapper walletMapper = Mockito.mock(WalletMapper.class);
 
     private WalletServiceImpl walletService;
 
     @BeforeEach
     public void setUpTest() {
-        walletService = new WalletServiceImpl(userRepo, walletRepo, payRepo);
+        walletService = new WalletServiceImpl(userRepo, walletRepo, payRepo, walletMapper);
     }
 
 
@@ -208,10 +195,15 @@ class WalletServiceTest {
     @Test
     @DisplayName("createWallet_NotExistPaymentId_Exception")
     void createWallet_NotExistPaymentId_Exception() {
-        Long userId = 100L;
+        Long paymentId = 100L;
 
-        Mockito.when(payRepo.findById(100L)).thenThrow(new IllegalArgumentException("Bad Request"));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> userRepo.findById(userId));
+        CreateWalletInDTO createWalletInDTO = CreateWalletInDTO.builder()
+                .userId(100L)
+                .paymentId(paymentId)
+                .build();
+
+        Mockito.when(payRepo.findById(paymentId)).thenThrow(new IllegalArgumentException("Bad Request"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> walletService.createWallet(createWalletInDTO));
     }
 
     @Test
@@ -258,27 +250,33 @@ class WalletServiceTest {
                         .payment(payment)
                         .build()));
 
-        Mockito.when(walletMapper.toCreateWalletOutDTO(any(Wallet.class)))
-                .thenReturn(CreateWalletOutDTO.builder()
-                .walletId(100L)
-                .state(State.ENROLL)
-                .userId(100L)
-                .createAt(createAt)
-                .updateAt(updateAt)
-                .build());
-
-        Mockito.when(walletMapper.toDeleteWalletOutDTOCustom(any(Wallet.class)))
+        Mockito.when(walletMapper.toDeleteWalletOutDTOCustom(any()))
                 .thenReturn(DeleteWalletOutDTO.builder()
                         .walletId(100L)
                         .paymentId(100L)
                         .paymentName("hozzi pay")
-                        .state(State.ENROLL)
+                        .state(State.CANCEL)
                         .discountRate(0.7F)
                         .rewardRate(0.7F)
                         .createAt(createAt)
                         .updateAt(updateAt)
                         .cancelAt(cancelAt)
                         .build());
+
+        // walletMapper 에 존재하는 모든 메서드가 when이 안먹힘...
+        Mockito.when(walletMapper.toDeleteWalletOutDTOCustom(any()))
+                .thenReturn(DeleteWalletOutDTO.builder()
+                        .walletId(100L)
+                        .paymentId(100L)
+                        .paymentName("hozzi pay")
+                        .state(State.CANCEL)
+                        .discountRate(0.7F)
+                        .rewardRate(0.7F)
+                        .createAt(createAt)
+                        .updateAt(updateAt)
+                        .cancelAt(cancelAt)
+                        .build());
+
         // when
         DeleteWalletOutDTO deleteWalletOutDTO = walletService.deleteWallet(deleteWalletInDTO);
 
@@ -286,7 +284,7 @@ class WalletServiceTest {
         Assertions.assertEquals(deleteWalletOutDTO.getWalletId(), 100L);
         Assertions.assertEquals(deleteWalletOutDTO.getPaymentId(), 100L);
         Assertions.assertEquals(deleteWalletOutDTO.getPaymentName(), "hozzi pay");
-        Assertions.assertEquals(deleteWalletOutDTO.getState(), State.ENROLL);
+        Assertions.assertEquals(deleteWalletOutDTO.getState(), State.CANCEL);
         Assertions.assertEquals(deleteWalletOutDTO.getDiscountRate(), 0.7F);
         Assertions.assertEquals(deleteWalletOutDTO.getRewardRate(), 0.7F);
         Assertions.assertEquals(deleteWalletOutDTO.getCreateAt(), createAt);
@@ -297,5 +295,7 @@ class WalletServiceTest {
     @Test
     @DisplayName("deleteWallet_NotExistUserId_Exception")
     void deleteWallet_NotExistUserId_Exception() {
+        Mockito.when(walletRepo.findBy(any(DeleteWalletInDTO.class))).thenThrow(new IllegalArgumentException("Bad Request"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> walletService.deleteWallet(any(DeleteWalletInDTO.class)));
     }
 }
