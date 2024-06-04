@@ -37,8 +37,6 @@ class WalletServiceTest {
     public void setUpTest() {
         walletService = new WalletServiceImpl(userRepo, walletRepo, payRepo, walletMapper);
     }
-
-
     @Test
     @DisplayName("readWallet_Normal_Success")
     void readWallet_Normal_Success() throws Exception {
