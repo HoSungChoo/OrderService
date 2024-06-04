@@ -44,13 +44,13 @@ public class WalletServiceImpl implements WalletService {
     public CreateWalletOutDTO createWallet(CreateWalletInDTO createWalletInDTO) throws Exception {
         Wallet wallet = Wallet.builder()
                 .state(State.ENROLL)
-                .user(userRepo.findById(createWalletInDTO.getUserId()).orElseThrow(() -> new IllegalArgumentException("Bad Request")))
-                .payment(payRepo.findById(createWalletInDTO.getPaymentId()).orElseThrow(() -> new IllegalArgumentException("Bad Request")))
+                .user(userRepo.findById(createWalletInDTO.getUserId()).orElseThrow(() -> new IllegalArgumentException("Not exist userId")))
+                .payment(payRepo.findById(createWalletInDTO.getPaymentId()).orElseThrow(() -> new IllegalArgumentException("Not exist PaymentId")))
                 .build();
 
         walletRepo.save(wallet);
 
-        return walletMapper.toCreateWalletOutDTO(wallet);
+        return walletMapper.toCreateWalletOutDTOCustom(wallet);
     }
 
     @Override
@@ -60,7 +60,6 @@ public class WalletServiceImpl implements WalletService {
 
         walletRepo.flush();
 
-        //return WalletMapper.walletMapper.toDeleteWalletOutDTOCustom(wallet);
         return walletMapper.toDeleteWalletOutDTOCustom(wallet);
     }
 }

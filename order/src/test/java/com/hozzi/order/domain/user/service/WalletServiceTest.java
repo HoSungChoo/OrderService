@@ -30,10 +30,7 @@ class WalletServiceTest {
     private UserRepo userRepo = Mockito.mock(UserRepo.class);
     private WalletRepo walletRepo = Mockito.mock(WalletRepo.class);
     private PayRepo payRepo = Mockito.mock(PayRepo.class);
-    //@Spy
-    //private WalletMapper walletMapper = Mappers.getMapper(WalletMapper.class);
     private WalletMapper walletMapper = Mockito.mock(WalletMapper.class);
-
     private WalletServiceImpl walletService;
 
     @BeforeEach
@@ -167,7 +164,7 @@ class WalletServiceTest {
 
         Mockito.when(userRepo.findById(100L)).thenReturn(Optional.ofNullable(user));
         Mockito.when(payRepo.findById(100L)).thenReturn(Optional.ofNullable(payment));
-        Mockito.when(walletMapper.toCreateWalletOutDTO(any(Wallet.class))).thenReturn(CreateWalletOutDTO.builder()
+        Mockito.when(walletMapper.toCreateWalletOutDTOCustom(any(Wallet.class))).thenReturn(CreateWalletOutDTO.builder()
                 .walletId(100L)
                 .state(State.ENROLL)
                 .userId(100L)
