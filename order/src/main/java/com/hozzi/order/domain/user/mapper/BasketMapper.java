@@ -8,11 +8,9 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface BasketMapper {
-    BasketMapper basketMapper = Mappers.getMapper(BasketMapper.class);
     ReadBasketOutDTO toReadBasketOutDTO(Basket basket);
-    CreateBasketOutDTO toCreateBasketOutDTO(Basket basket);
     default ReadBasketOutDTO toReadBasketOutDTOCustom(Basket basket){
-        ReadBasketOutDTO readBasketOutDTO = basketMapper.toReadBasketOutDTO(basket);
+        ReadBasketOutDTO readBasketOutDTO = toReadBasketOutDTO(basket);
 
         readBasketOutDTO.setUserId(basket.getUser().getUserId());
         readBasketOutDTO.setStoreId(basket.getStore().getStoreId());
@@ -20,9 +18,9 @@ public interface BasketMapper {
 
         return readBasketOutDTO;
     }
-
+    CreateBasketOutDTO toCreateBasketOutDTO(Basket basket);
     default CreateBasketOutDTO toCreateBasketOutDTOCustom(Basket basket){
-        CreateBasketOutDTO createBasketOutDTO = basketMapper.toCreateBasketOutDTO(basket);
+        CreateBasketOutDTO createBasketOutDTO = toCreateBasketOutDTO(basket);
 
         createBasketOutDTO.setUserId(basket.getUser().getUserId());
         createBasketOutDTO.setStoreId(basket.getStore().getStoreId());

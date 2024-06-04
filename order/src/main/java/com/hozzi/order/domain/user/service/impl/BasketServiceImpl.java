@@ -21,19 +21,21 @@ public class BasketServiceImpl implements BasketService {
     private final UserRepo userRepo;
     private final StoreRepo storeRepo;
     private final MenuRepo menuRepo;
+    private final BasketMapper basketMapper;
 
-    public BasketServiceImpl(BasketRepo basketRepo, UserRepo userRepo, StoreRepo storeRepo, MenuRepo menuRepo) {
+    public BasketServiceImpl(BasketRepo basketRepo, UserRepo userRepo, StoreRepo storeRepo, MenuRepo menuRepo, BasketMapper basketMapper) {
         this.basketRepo = basketRepo;
         this.userRepo = userRepo;
         this.storeRepo = storeRepo;
         this.menuRepo = menuRepo;
+        this.basketMapper = basketMapper;
     }
 
     @Override
     public ReadBasketOutDTO readBasketByBasketId(Long basketId) throws Exception {
         Basket basket = basketRepo.findById(basketId).orElseThrow(()->new IllegalArgumentException("Not exist basketId"));
 
-        return BasketMapper.basketMapper.toReadBasketOutDTOCustom(basket);
+        return basketMapper.toReadBasketOutDTOCustom(basket);
     }
 
     @Override
@@ -54,7 +56,7 @@ public class BasketServiceImpl implements BasketService {
 
         basketRepo.save(basket);
 
-        return BasketMapper.basketMapper.toCreateBasketOutDTOCustom(basket);
+        return basketMapper.toCreateBasketOutDTOCustom(basket);
     }
 
     @Override
