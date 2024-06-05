@@ -9,7 +9,6 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface PayMapper {
-    PayMapper payMapper = Mappers.getMapper(PayMapper.class);
     ReadPaymentOutDTO toReadPaymentOutDTO(Payment payment);
     CreatePaymentOutDTO toCreatePaymentOutDTO(Payment payment);
     DeletePaymentOutDTO toDeletePaymentOutDTO(Payment payment);

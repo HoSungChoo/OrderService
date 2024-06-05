@@ -14,9 +14,10 @@ import java.util.List;
 @Service
 public class PayServiceImpl implements PayService {
     private final PayRepo payRepo;
-
-    public PayServiceImpl(PayRepo payRepo) {
+    private final PayMapper payMapper;
+    public PayServiceImpl(PayRepo payRepo, PayMapper payMapper) {
         this.payRepo = payRepo;
+        this.payMapper = payMapper;
     }
 
     @Override
@@ -28,9 +29,9 @@ public class PayServiceImpl implements PayService {
 
     @Override
     public ReadPaymentOutDTO readPayment(Long paymentId) {
-        Payment payment = payRepo.findById(paymentId).orElseThrow(()->new IllegalArgumentException("Bad Request"));
+        Payment payment = payRepo.findById(paymentId).orElseThrow(()->new IllegalArgumentException("Not exist paymentId"));
 
-        return PayMapper.payMapper.toReadPaymentOutDTO(payment);
+        return payMapper.toReadPaymentOutDTO(payment);
     }
 
     @Override
@@ -48,12 +49,12 @@ public class PayServiceImpl implements PayService {
 
         payRepo.save(payment);
 
-        return PayMapper.payMapper.toCreatePaymentOutDTO(payment);
+        return payMapper.toCreatePaymentOutDTO(payment);
     }
 
     @Override
     public DeletePaymentOutDTO deletePayment(DeletePaymentInDTO deletePaymentInDTO) {
-        Payment payment = payRepo.findById(deletePaymentInDTO.getPaymentId()).orElseThrow(()->new IllegalArgumentException("Bad Request"));
+        Payment payment = payRepo.findById(deletePaymentInDTO.getPaymentId()).orElseThrow(()->new IllegalArgumentException("Not exist paymentId"));
 
         if (payment.getState().equals(State.CANCEL))
             throw new IllegalArgumentException("Already Canceled");
@@ -61,6 +62,6 @@ public class PayServiceImpl implements PayService {
         payment.setState(State.CANCEL);
         payment.setCancelAt(LocalDateTime.now());
 
-        return PayMapper.payMapper.toDeletePaymentOutDTO(payment);
+        return payMapper.toDeletePaymentOutDTO(payment);
     }
 }
