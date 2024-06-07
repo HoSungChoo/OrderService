@@ -11,14 +11,14 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class ReadRefundOutDTO {
-    Long refundId;
-    Long customBalance;
-    Long ownerBalance;
-    RefundType refundType;
-    String refundReason;
-    Long customId;
-    Long ownerId;
-    Long orderId;
-    LocalDateTime createAt;
-    LocalDateTime updateAt;
+    private Long refundId;
+    private Long customBalance;
+    private Long ownerBalance;
+    private RefundType refundType;
+    private String refundReason;
+    private Long customId;
+    private Long ownerId;
+    private Long orderId;
+    private LocalDateTime createAt;
+    private LocalDateTime updateAt;
 }

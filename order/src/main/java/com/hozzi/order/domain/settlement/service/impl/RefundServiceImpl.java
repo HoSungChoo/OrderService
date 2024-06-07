@@ -12,6 +12,7 @@ import com.hozzi.order.domain.settlement.service.RefundService;
 import com.hozzi.order.domain.user.repo.UserRepo;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -37,9 +38,9 @@ public class RefundServiceImpl implements RefundService {
                 .ownerBalance(createRefundInDTO.getOwnerBalance())
                 .refundType(createRefundInDTO.getRefundType())
                 .refundReason(createRefundInDTO.getRefundReason())
-                .custom(userRepo.findById(createRefundInDTO.getCustomId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
-                .owner(userRepo.findById(createRefundInDTO.getOwnerId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
-                .order(orderRepo.findById(createRefundInDTO.getOrderId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
+                .custom(userRepo.findById(createRefundInDTO.getCustomId()).orElseThrow(()->new IllegalArgumentException("Not exist customId")))
+                .owner(userRepo.findById(createRefundInDTO.getOwnerId()).orElseThrow(()->new IllegalArgumentException("Not exist ownerId")))
+                .order(orderRepo.findById(createRefundInDTO.getOrderId()).orElseThrow(()->new IllegalArgumentException("Not exist orderId")))
                 .build();
 
         refundRepo.save(refund);
@@ -49,8 +50,8 @@ public class RefundServiceImpl implements RefundService {
 
     @Override
     public ReadRefundOutDTOs readRefund(String beginDate, String endDate) {
-        LocalDateTime beginDateTime = LocalDateTime.parse(beginDate, DateTimeFormatter.ofPattern("yyyyMMdd"));
-        LocalDateTime endDateTime = LocalDateTime.parse(endDate, DateTimeFormatter.ofPattern("yyyyMMdd"));
+        LocalDateTime beginDateTime = LocalDateTime.parse(beginDate, DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+        LocalDateTime endDateTime = LocalDateTime.parse(endDate, DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
 
         List<ReadRefundOutDTO> readRefundOutDTOS = refundRepo.findAllBetweenDate(beginDateTime, endDateTime)
                 .orElseThrow(()->new IllegalArgumentException("Bad Request"));
