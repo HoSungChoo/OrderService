@@ -21,11 +21,13 @@ public class RefundServiceImpl implements RefundService {
     private final RefundRepo refundRepo;
     private final UserRepo userRepo;
     private final OrderRepo orderRepo;
+    private final RefundMapper refundMapper;
 
-    public RefundServiceImpl(RefundRepo refundRepo, UserRepo userRepo, OrderRepo orderRepo) {
+    public RefundServiceImpl(RefundRepo refundRepo, UserRepo userRepo, OrderRepo orderRepo, RefundMapper refundMapper) {
         this.refundRepo = refundRepo;
         this.userRepo = userRepo;
         this.orderRepo = orderRepo;
+        this.refundMapper = refundMapper;
     }
 
     @Override
@@ -37,12 +39,12 @@ public class RefundServiceImpl implements RefundService {
                 .refundReason(createRefundInDTO.getRefundReason())
                 .custom(userRepo.findById(createRefundInDTO.getCustomId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
                 .owner(userRepo.findById(createRefundInDTO.getOwnerId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
-                .order(orderRepo.findById(createRefundInDTO.getOwnerId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
+                .order(orderRepo.findById(createRefundInDTO.getOrderId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
                 .build();
 
         refundRepo.save(refund);
 
-        return RefundMapper.refundMapper.toCreateRefundOutDTO(refund);
+        return refundMapper.toCreateRefundOutDTO(refund);
     }
 
     @Override
