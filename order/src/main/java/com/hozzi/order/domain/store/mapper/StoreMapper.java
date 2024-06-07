@@ -8,7 +8,6 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface StoreMapper {
-    StoreMapper storeMapper = Mappers.getMapper(StoreMapper.class);
     CreateStoreOutDTO toCreateStoreOutDTO(Store store);
     UpdateStoreOutDTO toUpdateStoreOutDTO(Store store);
 }

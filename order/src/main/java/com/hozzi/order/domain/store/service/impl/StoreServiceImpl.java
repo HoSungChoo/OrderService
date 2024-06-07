@@ -15,15 +15,17 @@ import java.util.List;
 public class StoreServiceImpl implements StoreService {
     private final StoreRepo storeRepo;
     private final UserRepo userRepo;
+    private final StoreMapper storeMapper;
 
-    public StoreServiceImpl(StoreRepo storeRepo, UserRepo userRepo) {
+    public StoreServiceImpl(StoreRepo storeRepo, UserRepo userRepo, StoreMapper storeMapper) {
         this.storeRepo = storeRepo;
         this.userRepo = userRepo;
+        this.storeMapper = storeMapper;
     }
 
     @Override
     public ReadStoreOutDTOs readStore(Long userId) {
-        List<ReadStoreOutDTO> readStoreOutDTOs = storeRepo.findAllByUserIdCustom(userId).orElseThrow(()->new IllegalArgumentException("Bad Request"));
+        List<ReadStoreOutDTO> readStoreOutDTOs = storeRepo.findAllByUserIdCustom(userId).orElseThrow(() -> new IllegalArgumentException("Not exist userId"));
 
         return ReadStoreOutDTOs.builder().stores(readStoreOutDTOs).build();
     }
@@ -35,23 +37,23 @@ public class StoreServiceImpl implements StoreService {
                 .storeType(createStoreInDTO.getStoreType())
                 .state(createStoreInDTO.getState())
                 .cancelAt(LocalDateTime.of(2999, 12, 31, 0, 0, 0))
-                .user(userRepo.findById(createStoreInDTO.getUserId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
+                .user(userRepo.findById(createStoreInDTO.getUserId()).orElseThrow(() -> new IllegalArgumentException("Not Exist UserId")))
                 .build();
 
         storeRepo.save(store);
 
-        return StoreMapper.storeMapper.toCreateStoreOutDTO(store);
+        return storeMapper.toCreateStoreOutDTO(store);
     }
 
     @Override
     public UpdateStoreOutDTO updateStore(UpdateStoreInDTO updateStoreInDTO) {
-        Store store = storeRepo.findById(updateStoreInDTO.getStoreId()).orElseThrow(()->new IllegalArgumentException("Bad Request"));
+        Store store = storeRepo.findById(updateStoreInDTO.getStoreId()).orElseThrow(() -> new IllegalArgumentException("Not exist storeId"));
 
         store.setStoreName(updateStoreInDTO.getStoreName());
         store.setStoreType(updateStoreInDTO.getStoreType());
         store.setState(updateStoreInDTO.getState());
-        store.setUser(userRepo.findById(updateStoreInDTO.getUserId()).orElseThrow(()->new IllegalArgumentException("Bad Request")));
+        store.setUser(userRepo.findById(updateStoreInDTO.getUserId()).orElseThrow(() -> new IllegalArgumentException("Not exist userId")));
 
-        return StoreMapper.storeMapper.toUpdateStoreOutDTO(store);
+        return storeMapper.toUpdateStoreOutDTO(store);
     }
 }
