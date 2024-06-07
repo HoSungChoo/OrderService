@@ -8,17 +8,16 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface MenuMapper {
-    MenuMapper menuMapper = Mappers.getMapper(MenuMapper.class);
     CreateMenuOutDTO toCreateMenuOutDTO(Menu menu);
     UpdateMenuOutDTO toUpdateMenuOutDTO(Menu menu);
     default CreateMenuOutDTO toCreateMenuOutDTOCustom(Menu menu){
-        CreateMenuOutDTO createMenuOutDTO = menuMapper.toCreateMenuOutDTOCustom(menu);
+        CreateMenuOutDTO createMenuOutDTO = toCreateMenuOutDTOCustom(menu);
         createMenuOutDTO.setStoreId(menu.getStore().getStoreId());
 
         return createMenuOutDTO;
     }
     default UpdateMenuOutDTO toUpdateMenuOutDTOCustom(Menu menu){
-        UpdateMenuOutDTO updateMenuOutDTO = menuMapper.toUpdateMenuOutDTO(menu);
+        UpdateMenuOutDTO updateMenuOutDTO = toUpdateMenuOutDTO(menu);
         updateMenuOutDTO.setStoreId(menu.getStore().getStoreId());
 
         return updateMenuOutDTO;

@@ -14,15 +14,17 @@ import java.util.List;
 public class MenuServiceImpl implements MenuService {
     private final MenuRepo menuRepo;
     private final StoreRepo storeRepo;
+    private final MenuMapper menuMapper;
 
-    public MenuServiceImpl(MenuRepo menuRepo, StoreRepo storeRepo) {
+    public MenuServiceImpl(MenuRepo menuRepo, StoreRepo storeRepo, MenuMapper menuMapper) {
         this.menuRepo = menuRepo;
         this.storeRepo = storeRepo;
+        this.menuMapper = menuMapper;
     }
 
     @Override
     public ReadMenuOutDTOs readMenu(Long storeId) {
-        List<ReadMenuOutDTO> readMenuOutDTOs = menuRepo.findByStoreIdCustom(storeId).orElseThrow(()->new IllegalArgumentException("Bad Request"));
+        List<ReadMenuOutDTO> readMenuOutDTOs = menuRepo.findByStoreIdCustom(storeId).orElseThrow(()->new IllegalArgumentException("Not exist storeId"));
 
         return ReadMenuOutDTOs.builder().menu(readMenuOutDTOs).build();
     }
@@ -38,18 +40,18 @@ public class MenuServiceImpl implements MenuService {
 
         menuRepo.save(menu);
 
-        return MenuMapper.menuMapper.toCreateMenuOutDTO(menu);
+        return menuMapper.toCreateMenuOutDTO(menu);
     }
 
     @Override
     public UpdateMenuOutDTO updateMenu(UpdateMenuInDTO updateMenuInDTO) {
-        Menu menu = menuRepo.findById(updateMenuInDTO.getMenuId()).orElseThrow(()->new IllegalArgumentException("Bad Request"));
+        Menu menu = menuRepo.findById(updateMenuInDTO.getMenuId()).orElseThrow(()->new IllegalArgumentException("Not exist MenuId"));
 
         menu.setMenuName(updateMenuInDTO.getMenuName());
         menu.setMenuPrice(updateMenuInDTO.getMenuPrice());
         menu.setState(updateMenuInDTO.getState());
-        menu.setStore(storeRepo.findById(updateMenuInDTO.getStoreId()).orElseThrow(()->new IllegalArgumentException("Bad Request")));
+        menu.setStore(storeRepo.findById(updateMenuInDTO.getStoreId()).orElseThrow(()->new IllegalArgumentException("Not exist StoreId")));
 
-        return MenuMapper.menuMapper.toUpdateMenuOutDTO(menu);
+        return menuMapper.toUpdateMenuOutDTO(menu);
     }
 }
