@@ -11,7 +11,6 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring", imports = {Wallet.class, User.class})
 public interface WalletMapper {
-    //WalletMapper walletMapper = Mappers.getMapper(WalletMapper.class);
     CreateWalletOutDTO toCreateWalletOutDTO(Wallet wallet);
     default CreateWalletOutDTO toCreateWalletOutDTOCustom(Wallet wallet){
         CreateWalletOutDTO createWalletOutDTO = toCreateWalletOutDTO(wallet);
