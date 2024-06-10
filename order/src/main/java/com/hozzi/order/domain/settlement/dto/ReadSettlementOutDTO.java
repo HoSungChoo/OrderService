@@ -9,10 +9,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class ReadSettlementOutDTO {
-    Long settlementId;
-    Long userId;
-    Long orderId;
-    Long balance;
-    LocalDateTime createAt;
-    LocalDateTime updateAt;
+    private Long settlementId;
+    private Long userId;
+    private Long orderId;
+    private Long balance;
+    private LocalDateTime createAt;
+    private LocalDateTime updateAt;
 }

@@ -9,11 +9,10 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface SettlementMapper {
-    SettlementMapper settlementMapper = Mappers.getMapper(SettlementMapper.class);
     CreateRewardOutDTO toCreateRewardOutDTO(Settlement settlement);
     CreatePayoutOutDTO toCreatePayoutOutDTO(Settlement settlement);
     default CreateRewardOutDTO toCreateRewardOutDTOCustom(Settlement settlement){
-        CreateRewardOutDTO createRewardOutDTO = settlementMapper.toCreateRewardOutDTOCustom(settlement);
+        CreateRewardOutDTO createRewardOutDTO = toCreateRewardOutDTOCustom(settlement);
 
         createRewardOutDTO.setUserId(settlement.getUser().getUserId());
         createRewardOutDTO.setOrderId(settlement.getOrder().getOrderId());
@@ -21,7 +20,7 @@ public interface SettlementMapper {
         return createRewardOutDTO;
     }
     default CreatePayoutOutDTO toCreatePayoutOutDTOCustom(Settlement settlement){
-        CreatePayoutOutDTO createPayoutOutDTO = settlementMapper.toCreatePayoutOutDTOCustom(settlement);
+        CreatePayoutOutDTO createPayoutOutDTO = toCreatePayoutOutDTOCustom(settlement);
 
         createPayoutOutDTO.setUserId(settlement.getUser().getUserId());
         createPayoutOutDTO.setOrderId(settlement.getOrder().getOrderId());

@@ -2,10 +2,8 @@ package com.hozzi.order.domain.settlement.service.impl;
 
 import com.hozzi.order.domain.order.repo.OrderRepo;
 import com.hozzi.order.domain.settlement.dto.*;
-import com.hozzi.order.domain.settlement.entity.Refund;
 import com.hozzi.order.domain.settlement.entity.Settlement;
 import com.hozzi.order.domain.settlement.enumerate.SettlementType;
-import com.hozzi.order.domain.settlement.mapper.RefundMapper;
 import com.hozzi.order.domain.settlement.mapper.SettlementMapper;
 import com.hozzi.order.domain.settlement.repo.RefundRepo;
 import com.hozzi.order.domain.settlement.repo.SettlementRepo;
@@ -23,12 +21,14 @@ public class SettlementServiceImpl implements SettlementService {
     private final RefundRepo refundRepo;
     private final UserRepo userRepo;
     private final OrderRepo orderRepo;
+    private final SettlementMapper settlementMapper;
 
-    public SettlementServiceImpl(SettlementRepo settlementRepo, RefundRepo refundRepo, UserRepo userRepo, OrderRepo orderRepo) {
+    public SettlementServiceImpl(SettlementRepo settlementRepo, RefundRepo refundRepo, UserRepo userRepo, OrderRepo orderRepo, SettlementMapper settlementMapper) {
         this.settlementRepo = settlementRepo;
         this.refundRepo = refundRepo;
         this.userRepo = userRepo;
         this.orderRepo = orderRepo;
+        this.settlementMapper = settlementMapper;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class SettlementServiceImpl implements SettlementService {
 
         settlementRepo.save(settlement);
 
-        return SettlementMapper.settlementMapper.toCreateRewardOutDTO(settlement);
+        return settlementMapper.toCreateRewardOutDTOCustom(settlement);
     }
 
     @Override
@@ -56,13 +56,13 @@ public class SettlementServiceImpl implements SettlementService {
 
         settlementRepo.save(settlement);
 
-        return SettlementMapper.settlementMapper.toCreatePayoutOutDTO(settlement);
+        return settlementMapper.toCreatePayoutOutDTOCustom(settlement);
     }
 
     @Override
     public ReadSettlementOutDTOs readReward(String beginDate, String endDate) {
-        LocalDateTime beginDateTime = LocalDateTime.parse(beginDate, DateTimeFormatter.ofPattern("yyyyMMdd"));
-        LocalDateTime endDateTime = LocalDateTime.parse(endDate, DateTimeFormatter.ofPattern("yyyyMMdd"));
+        LocalDateTime beginDateTime = LocalDateTime.parse(beginDate, DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+        LocalDateTime endDateTime = LocalDateTime.parse(endDate, DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
 
         List<ReadSettlementOutDTO> readSettlementOutDTOS = settlementRepo.findAllBetweenDate(beginDateTime, endDateTime, SettlementType.REWARD)
                 .orElseThrow(()->new IllegalArgumentException("Bad Request"));
@@ -72,8 +72,8 @@ public class SettlementServiceImpl implements SettlementService {
 
     @Override
     public ReadSettlementOutDTOs readPayout(String beginDate, String endDate) {
-        LocalDateTime beginDateTime = LocalDateTime.parse(beginDate, DateTimeFormatter.ofPattern("yyyyMMdd"));
-        LocalDateTime endDateTime = LocalDateTime.parse(endDate, DateTimeFormatter.ofPattern("yyyyMMdd"));
+        LocalDateTime beginDateTime = LocalDateTime.parse(beginDate, DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+        LocalDateTime endDateTime = LocalDateTime.parse(endDate, DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
 
         List<ReadSettlementOutDTO> readSettlementOutDTOS = settlementRepo.findAllBetweenDate(beginDateTime, endDateTime, SettlementType.PAYOUT)
                 .orElseThrow(()->new IllegalArgumentException("Bad Request"));
