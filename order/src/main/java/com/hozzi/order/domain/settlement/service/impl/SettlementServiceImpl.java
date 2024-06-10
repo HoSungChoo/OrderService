@@ -36,8 +36,8 @@ public class SettlementServiceImpl implements SettlementService {
         Settlement settlement = Settlement.builder()
                 .balance(createRewardInDTO.getBalance())
                 .settlementType(SettlementType.REWARD)
-                .user(userRepo.findById(createRewardInDTO.getUserId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
-                .order(orderRepo.findById(createRewardInDTO.getOrderId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
+                .user(userRepo.findById(createRewardInDTO.getUserId()).orElseThrow(()->new IllegalArgumentException("Not exist userId")))
+                .order(orderRepo.findById(createRewardInDTO.getOrderId()).orElseThrow(()->new IllegalArgumentException("Not exist orderId")))
                 .build();
 
         settlementRepo.save(settlement);
@@ -65,7 +65,7 @@ public class SettlementServiceImpl implements SettlementService {
         LocalDateTime endDateTime = LocalDateTime.parse(endDate, DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
 
         List<ReadSettlementOutDTO> readSettlementOutDTOS = settlementRepo.findAllBetweenDate(beginDateTime, endDateTime, SettlementType.REWARD)
-                .orElseThrow(()->new IllegalArgumentException("Bad Request"));
+                .orElseThrow(()->new IllegalArgumentException("Exception"));
 
         return ReadSettlementOutDTOs.builder().settlements(readSettlementOutDTOS).build();
     }

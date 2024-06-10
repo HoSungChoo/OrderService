@@ -47,7 +47,8 @@ class SettlementServiceTest {
     }
 
     @Test
-    void createReward() {
+    @DisplayName("createReward_Normal_Success")
+    void createReward_Normal_Success() {
         LocalDateTime time = LocalDateTime.now();
         CreateRewardInDTO createRewardInDTO = CreateRewardInDTO.builder()
                 .orderId(100L)
@@ -106,9 +107,37 @@ class SettlementServiceTest {
         Assertions.assertEquals(createRewardOutDTO.getCreateAt(), time);
         Assertions.assertEquals(createRewardOutDTO.getUpdateAt(), time);
     }
-
     @Test
-    void createPayout() {
+    @DisplayName("createReward_NotExistUserId_Exception")
+    void createReward_NotExistUserId_Exception() {
+        CreateRewardInDTO createRewardInDTO = CreateRewardInDTO.builder()
+                .orderId(100L)
+                .userId(100L)
+                .balance(100L)
+                .build();
+
+        Mockito.when(userRepo.findById(createRewardInDTO.getUserId()))
+                .thenThrow(new IllegalArgumentException("Not exist userId"));
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> settlementService.createReward(createRewardInDTO));
+    }
+    @Test
+    @DisplayName("createReward_NotExistOrderId_Exception")
+    void createReward_NotExistOrderId_Exception() {
+        CreateRewardInDTO createRewardInDTO = CreateRewardInDTO.builder()
+                .orderId(100L)
+                .userId(100L)
+                .balance(100L)
+                .build();
+
+        Mockito.when(orderRepo.findById(createRewardInDTO.getOrderId()))
+                .thenThrow(new IllegalArgumentException("Not exist orderId"));
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> settlementService.createReward(createRewardInDTO));
+    }
+    @Test
+    @DisplayName("createPayout_Normal_Success")
+    void createPayout_Normal_Success() {
         LocalDateTime time = LocalDateTime.now();
         CreatePayoutInDTO createPayoutInDTO = CreatePayoutInDTO.builder()
                 .orderId(100L)
@@ -167,9 +196,37 @@ class SettlementServiceTest {
         Assertions.assertEquals(createPayoutOutDTO.getCreateAt(), time);
         Assertions.assertEquals(createPayoutOutDTO.getUpdateAt(), time);
     }
-
     @Test
-    void readReward() {
+    @DisplayName("createPayout_NotExistUserId_Exception")
+    void createPayout_NotExistUserId_Exception() {
+        CreatePayoutInDTO createPayoutInDTO = CreatePayoutInDTO.builder()
+                .orderId(100L)
+                .userId(100L)
+                .balance(100L)
+                .build();
+
+        Mockito.when(userRepo.findById(createPayoutInDTO.getUserId()))
+                .thenThrow(new IllegalArgumentException("Not exist userId"));
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> settlementService.createPayout(createPayoutInDTO));
+    }
+    @Test
+    @DisplayName("createPayout_NotExistOrderId_Exception")
+    void createPayout_NotExistOrderId_Exception() {
+        CreatePayoutInDTO createPayoutInDTO = CreatePayoutInDTO.builder()
+                .orderId(100L)
+                .userId(100L)
+                .balance(100L)
+                .build();
+
+        Mockito.when(orderRepo.findById(createPayoutInDTO.getOrderId()))
+                .thenThrow(new IllegalArgumentException("Not exist orderId"));
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> settlementService.createPayout(createPayoutInDTO));
+    }
+    @Test
+    @DisplayName("readReward_Normal_Success")
+    void readReward_Normal_Success() {
         LocalDateTime time = LocalDateTime.now();
         List<ReadSettlementOutDTO> readSettlementOutDTOS = new ArrayList<>();
 
@@ -195,9 +252,17 @@ class SettlementServiceTest {
         Assertions.assertEquals(readSettlementOutDTOs.getSettlements().get(0).getCreateAt(), time);
         Assertions.assertEquals(readSettlementOutDTOs.getSettlements().get(0).getUpdateAt(), time);
     }
-
     @Test
-    void readPayout() {
+    @DisplayName("readReward_NotExistData_Exception")
+    void readReward_NotExistData_Exception() {
+        Mockito.when(settlementRepo.findAllBetweenDate(any(LocalDateTime.class), any(LocalDateTime.class), any(SettlementType.class)))
+                .thenThrow(new IllegalArgumentException("Exception"));
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> settlementService.readReward("20240101000000", "20240607000000"));
+    }
+    @Test
+    @DisplayName("readPayout_Normal_Success")
+    void readPayout_Normal_Success() {
         LocalDateTime time = LocalDateTime.now();
         List<ReadSettlementOutDTO> readSettlementOutDTOS = new ArrayList<>();
 
@@ -222,5 +287,13 @@ class SettlementServiceTest {
         Assertions.assertEquals(readSettlementOutDTOs.getSettlements().get(0).getBalance(), 100L);
         Assertions.assertEquals(readSettlementOutDTOs.getSettlements().get(0).getCreateAt(), time);
         Assertions.assertEquals(readSettlementOutDTOs.getSettlements().get(0).getUpdateAt(), time);
+    }
+    @Test
+    @DisplayName("readPayout_NotExistData_Exception")
+    void readPayout_NotExistData_Exception() {
+        Mockito.when(settlementRepo.findAllBetweenDate(any(LocalDateTime.class), any(LocalDateTime.class), any(SettlementType.class)))
+                .thenThrow(new IllegalArgumentException("Exception"));
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> settlementService.readPayout("20240101000000", "20240607000000"));
     }
 }
