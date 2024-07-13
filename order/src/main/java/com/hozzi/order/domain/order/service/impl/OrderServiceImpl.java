@@ -32,8 +32,10 @@ public class OrderServiceImpl implements OrderService {
     private final OptionRepo optionRepo;
     private final BasketRepo basketRepo;
     private final UserRepo userRepo;
+    private final OrderMapper orderMapper;
+    private final OrderManageMapper orderManageMapper;
 
-    public OrderServiceImpl(OrderRepo orderRepo, OrderManageRepo orderManageRepo, WalletRepo walletRepo, StoreRepo storeRepo, MenuRepo menuRepo, OptionRepo optionRepo, BasketRepo basketRepo, UserRepo userRepo) {
+    public OrderServiceImpl(OrderRepo orderRepo, OrderManageRepo orderManageRepo, WalletRepo walletRepo, StoreRepo storeRepo, MenuRepo menuRepo, OptionRepo optionRepo, BasketRepo basketRepo, UserRepo userRepo, OrderMapper orderMapper, OrderManageMapper orderManageMapper) {
         this.orderRepo = orderRepo;
         this.orderManageRepo = orderManageRepo;
         this.walletRepo = walletRepo;
@@ -42,6 +44,8 @@ public class OrderServiceImpl implements OrderService {
         this.optionRepo = optionRepo;
         this.basketRepo = basketRepo;
         this.userRepo = userRepo;
+        this.orderMapper = orderMapper;
+        this.orderManageMapper = orderManageMapper;
     }
 
     @Override
@@ -76,7 +80,7 @@ public class OrderServiceImpl implements OrderService {
 
         orderManageRepo.save(orderManage);
 
-        return OrderMapper.orderMapper.toCreateOrderOutDTO(order);
+        return orderMapper.toCreateOrderOutDTO(order);
     }
 
     @Override
@@ -113,28 +117,28 @@ public class OrderServiceImpl implements OrderService {
 
         orderManageRepo.save(orderManage);
 
-        return OrderManageMapper.orderManageMapper.toUpdateOrderByCustomOutDTOCustom(orderManage);
+        return orderManageMapper.toUpdateOrderByCustomOutDTOCustom(orderManage);
     }
 
     @Override
     public UpdateOrderByOwnerOutDTO updateOrder(UpdateOrderByOwnerInDTO updateOrderByOwnerInDTO) {
         List<OrderManage> orderManages = orderManageRepo.findAllByOrderId(updateOrderByOwnerInDTO.getOrderId()).orElseThrow(()->new IllegalArgumentException("Bad Request"));
 
-        if (orderManages.size() != 2)
-            throw new IllegalArgumentException("Bad Request");
+        if (orderManages.size() != 1 && orderManages.size() != 2)
+            throw new IllegalArgumentException("Can't be granted permission");
 
         if (!(updateOrderByOwnerInDTO.getOmType().equals(OmType.PREPARE) || updateOrderByOwnerInDTO.getOmType().equals(OmType.CANCEL)))
-            throw new IllegalArgumentException("Bad Request");
+            throw new IllegalArgumentException("Can't be granted permission");
 
         OrderManage orderManage = OrderManage.builder()
                 .omType(updateOrderByOwnerInDTO.getOmType())
-                .order(orderRepo.findById(updateOrderByOwnerInDTO.getOrderId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
-                .user(userRepo.findById(updateOrderByOwnerInDTO.getUserId()).orElseThrow(()->new IllegalArgumentException("Bad Request")))
+                .order(orderRepo.findById(updateOrderByOwnerInDTO.getOrderId()).orElseThrow(()->new IllegalArgumentException("Not exist orderId")))
+                .user(userRepo.findById(updateOrderByOwnerInDTO.getUserId()).orElseThrow(()->new IllegalArgumentException("Not exist userId")))
                 .build();
 
         orderManageRepo.save(orderManage);
 
-        return OrderManageMapper.orderManageMapper.toUpdateOrderByOwnerOutDTOCustom(orderManage);
+        return orderManageMapper.toUpdateOrderByOwnerOutDTOCustom(orderManage);
     }
 
     @Override
@@ -150,6 +154,6 @@ public class OrderServiceImpl implements OrderService {
 
         orderManageRepo.save(orderManage);
 
-        return OrderManageMapper.orderManageMapper.toUpdateOrderByAdminOutDTOCustom(orderManage);
+        return orderManageMapper.toUpdateOrderByAdminOutDTOCustom(orderManage);
     }
 }

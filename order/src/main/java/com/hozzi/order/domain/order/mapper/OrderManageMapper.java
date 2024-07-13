@@ -9,12 +9,11 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface OrderManageMapper {
-    OrderManageMapper orderManageMapper = Mappers.getMapper(OrderManageMapper.class);
     UpdateOrderByCustomOutDTO toUpdateOrderByCustomOutDTO(OrderManage orderManage);
     UpdateOrderByOwnerOutDTO toUpdateOrderByOwnerOutDTO(OrderManage orderManage);
     UpdateOrderByAdminOutDTO toUpdateOrderByAdminOutDTO(OrderManage orderManage);
     default UpdateOrderByCustomOutDTO toUpdateOrderByCustomOutDTOCustom(OrderManage orderManage){
-        UpdateOrderByCustomOutDTO updateOrderByCustomOutDTO = orderManageMapper.toUpdateOrderByCustomOutDTOCustom(orderManage);
+        UpdateOrderByCustomOutDTO updateOrderByCustomOutDTO = toUpdateOrderByCustomOutDTOCustom(orderManage);
 
         updateOrderByCustomOutDTO.setOrderId(orderManage.getOrder().getOrderId());
         updateOrderByCustomOutDTO.setUserId(orderManage.getUser().getUserId());
@@ -22,7 +21,7 @@ public interface OrderManageMapper {
         return updateOrderByCustomOutDTO;
     }
     default UpdateOrderByOwnerOutDTO toUpdateOrderByOwnerOutDTOCustom(OrderManage orderManage){
-        UpdateOrderByOwnerOutDTO updateOrderByOwnerOutDTO = orderManageMapper.toUpdateOrderByOwnerOutDTOCustom(orderManage);
+        UpdateOrderByOwnerOutDTO updateOrderByOwnerOutDTO = toUpdateOrderByOwnerOutDTOCustom(orderManage);
 
         updateOrderByOwnerOutDTO.setOrderId(orderManage.getOrder().getOrderId());
         updateOrderByOwnerOutDTO.setUserId(orderManage.getUser().getUserId());
@@ -30,7 +29,7 @@ public interface OrderManageMapper {
         return updateOrderByOwnerOutDTO;
     }
     default UpdateOrderByAdminOutDTO toUpdateOrderByAdminOutDTOCustom(OrderManage orderManage){
-        UpdateOrderByAdminOutDTO updateOrderByAdminOutDTO = orderManageMapper.toUpdateOrderByAdminOutDTOCustom(orderManage);
+        UpdateOrderByAdminOutDTO updateOrderByAdminOutDTO = toUpdateOrderByAdminOutDTOCustom(orderManage);
 
         updateOrderByAdminOutDTO.setOrderId(orderManage.getOrder().getOrderId());
         updateOrderByAdminOutDTO.setUserId(orderManage.getUser().getUserId());
