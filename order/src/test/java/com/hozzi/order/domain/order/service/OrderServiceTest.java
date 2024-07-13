@@ -36,10 +36,7 @@ class OrderServiceTest {
     @DisplayName("")
     void readOrderManage_Normal_Success() {
     }
-    @Test
-    @DisplayName("")
-    void readOrderManage_Normal_Success2() {
-    }
+    
     @Test
     @DisplayName("")
     void readOrderManage_NotExistOrderId_Exception() {
