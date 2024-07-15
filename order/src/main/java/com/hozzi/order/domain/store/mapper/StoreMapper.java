@@ -6,7 +6,7 @@ import com.hozzi.order.domain.store.entity.Store;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface StoreMapper {
     CreateStoreOutDTO toCreateStoreOutDTO(Store store);
     UpdateStoreOutDTO toUpdateStoreOutDTO(Store store);

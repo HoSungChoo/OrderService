@@ -7,7 +7,7 @@ import com.hozzi.order.domain.settlement.entity.Settlement;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface SettlementMapper {
     CreateRewardOutDTO toCreateRewardOutDTO(Settlement settlement);
     CreatePayoutOutDTO toCreatePayoutOutDTO(Settlement settlement);

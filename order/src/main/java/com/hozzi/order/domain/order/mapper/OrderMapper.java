@@ -5,7 +5,7 @@ import com.hozzi.order.domain.order.entity.Order;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface OrderMapper {
     OrderMapper orderMapper = Mappers.getMapper(OrderMapper.class);
     CreateOrderOutDTO toCreateOrderOutDTO(Order order);

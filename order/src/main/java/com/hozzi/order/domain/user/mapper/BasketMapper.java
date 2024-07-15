@@ -6,7 +6,7 @@ import com.hozzi.order.domain.user.entity.Basket;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface BasketMapper {
     ReadBasketOutDTO toReadBasketOutDTO(Basket basket);
     default ReadBasketOutDTO toReadBasketOutDTOCustom(Basket basket){

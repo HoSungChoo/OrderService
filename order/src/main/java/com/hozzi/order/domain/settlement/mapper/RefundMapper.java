@@ -5,7 +5,7 @@ import com.hozzi.order.domain.settlement.entity.Refund;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface RefundMapper {
     CreateRefundOutDTO toCreateRefundOutDTO(Refund refund);
     default CreateRefundOutDTO toCreateRefundOutDTOCustom(Refund refund){

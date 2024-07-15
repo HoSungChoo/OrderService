@@ -6,7 +6,7 @@ import com.hozzi.order.domain.store.entity.Menu;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface MenuMapper {
     CreateMenuOutDTO toCreateMenuOutDTO(Menu menu);
     UpdateMenuOutDTO toUpdateMenuOutDTO(Menu menu);
