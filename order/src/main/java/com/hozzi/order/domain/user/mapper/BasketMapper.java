@@ -1,13 +1,17 @@
 package com.hozzi.order.domain.user.mapper;
 
+import com.hozzi.order.domain.order.entity.Order;
+import com.hozzi.order.domain.store.entity.Menu;
+import com.hozzi.order.domain.store.entity.Store;
 import com.hozzi.order.domain.user.dto.CreateBasketOutDTO;
 import com.hozzi.order.domain.user.dto.ReadBasketOutDTO;
 import com.hozzi.order.domain.user.entity.Basket;
+import com.hozzi.order.domain.user.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", imports = {Store.class, Menu.class, User.class},unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface BasketMapper {
     ReadBasketOutDTO toReadBasketOutDTO(Basket basket);
     default ReadBasketOutDTO toReadBasketOutDTOCustom(Basket basket){

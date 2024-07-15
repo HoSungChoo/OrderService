@@ -1,13 +1,16 @@
 package com.hozzi.order.domain.store.mapper;
 
+import com.hozzi.order.domain.order.entity.Order;
 import com.hozzi.order.domain.store.dto.CreateMenuOutDTO;
 import com.hozzi.order.domain.store.dto.UpdateMenuOutDTO;
 import com.hozzi.order.domain.store.entity.Menu;
+import com.hozzi.order.domain.store.entity.Store;
+import com.hozzi.order.domain.user.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", imports = {Store.class},unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface MenuMapper {
     CreateMenuOutDTO toCreateMenuOutDTO(Menu menu);
     UpdateMenuOutDTO toUpdateMenuOutDTO(Menu menu);
