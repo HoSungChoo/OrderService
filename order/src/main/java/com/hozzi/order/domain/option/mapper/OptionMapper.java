@@ -9,7 +9,6 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface OptionMapper {
-    OptionMapper optionMapper = Mappers.getMapper(OptionMapper.class);
     ReadOptionOutDTO toReadOptionOutDTO(Option option);
     CreateOptionOutDTO toCreateOptionOutDTO(Option option);
 }

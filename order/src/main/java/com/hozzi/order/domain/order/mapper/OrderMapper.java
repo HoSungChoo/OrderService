@@ -8,6 +8,5 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface OrderMapper {
-    OrderMapper orderMapper = Mappers.getMapper(OrderMapper.class);
     CreateOrderOutDTO toCreateOrderOutDTO(Order order);
 }

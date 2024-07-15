@@ -12,15 +12,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class OptionServiceImpl implements OptionService {
     private final OptionRepo optionRepo;
-    public OptionServiceImpl(OptionRepo optionRepo) {
+    private final OptionMapper optionMapper;
+    public OptionServiceImpl(OptionRepo optionRepo, OptionMapper optionMapper) {
         this.optionRepo = optionRepo;
+        this.optionMapper = optionMapper;
     }
 
     @Override
     public ReadOptionOutDTO readOrderManage(String optionName) {
         Option option = optionRepo.findByOptionName(optionName).orElseThrow(()->new IllegalArgumentException("Bad Request"));
 
-        return OptionMapper.optionMapper.toReadOptionOutDTO(option);
+        return optionMapper.toReadOptionOutDTO(option);
     }
 
     @Override
@@ -33,6 +35,6 @@ public class OptionServiceImpl implements OptionService {
 
         optionRepo.save(option);
 
-        return OptionMapper.optionMapper.toCreateOptionOutDTO(option);
+        return optionMapper.toCreateOptionOutDTO(option);
     }
 }
