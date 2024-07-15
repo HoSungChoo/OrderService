@@ -5,6 +5,7 @@ import com.hozzi.order.domain.order.dto.UpdateOrderByCustomOutDTO;
 import com.hozzi.order.domain.order.dto.UpdateOrderByOwnerOutDTO;
 import com.hozzi.order.domain.order.entity.OrderManage;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)

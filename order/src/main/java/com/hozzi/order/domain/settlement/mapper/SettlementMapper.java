@@ -5,6 +5,7 @@ import com.hozzi.order.domain.settlement.dto.CreateRefundOutDTO;
 import com.hozzi.order.domain.settlement.dto.CreateRewardOutDTO;
 import com.hozzi.order.domain.settlement.entity.Settlement;
 import org.mapstruct.Mapper;
+import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
