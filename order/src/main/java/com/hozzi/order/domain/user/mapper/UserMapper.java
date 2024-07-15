@@ -1,5 +1,6 @@
 package com.hozzi.order.domain.user.mapper;
 
+import com.hozzi.order.domain.option.entity.Option;
 import com.hozzi.order.domain.user.dto.DeleteUserOutDTO;
 import com.hozzi.order.domain.user.dto.ReadUserOutDTO;
 import com.hozzi.order.domain.user.dto.UpdateUserOutDTO;
@@ -9,7 +10,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", imports = {User.class},unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserMapper {
     ReadUserOutDTO toReadUserOutDTO(User user);
     UpdateUserOutDTO toUpdateUserOutDTO(User user);
