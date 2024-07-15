@@ -1,5 +1,6 @@
 package com.hozzi.order.domain.user.mapper;
 
+import com.hozzi.order.domain.pay.entity.Payment;
 import com.hozzi.order.domain.user.dto.CreateWalletOutDTO;
 import com.hozzi.order.domain.user.dto.CreateWalletOutDTO.CreateWalletOutDTOBuilder;
 import com.hozzi.order.domain.user.dto.DeleteWalletOutDTO;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-15T11:15:05+0900",
+    date = "2024-07-15T11:18:25+0900",
     comments = "version: 1.4.2.Final, compiler: IncrementalProcessingEnvironment from gradle-language-java-8.7.jar, environment: Java 17.0.11 (Oracle Corporation)"
 )
 @Component

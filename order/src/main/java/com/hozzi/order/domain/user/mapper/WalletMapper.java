@@ -1,5 +1,6 @@
 package com.hozzi.order.domain.user.mapper;
 
+import com.hozzi.order.domain.pay.entity.Payment;
 import com.hozzi.order.domain.user.dto.CreateWalletInDTO;
 import com.hozzi.order.domain.user.dto.CreateWalletOutDTO;
 import com.hozzi.order.domain.user.dto.DeleteWalletOutDTO;
@@ -10,7 +11,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring", imports = {Wallet.class, User.class}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", imports = {Wallet.class, User.class, Payment.class}, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface WalletMapper {
     CreateWalletOutDTO toCreateWalletOutDTO(Wallet wallet);
     default CreateWalletOutDTO toCreateWalletOutDTOCustom(Wallet wallet){
