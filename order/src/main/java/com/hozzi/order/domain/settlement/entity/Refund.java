@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @Table(schema = "root", name = "refund")
 public class Refund {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long refundId;
     @Column(nullable = false)
     private Long customBalance;

@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Table(schema = "root", name = "baskets")
 public class Basket {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long basketId;
     @Column(nullable = false)
     private Integer amount;

@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @Table(schema = "root", name = "options")
 public class Option {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long optionId;
     @Column(nullable = false, unique = true)
     private String optionName;

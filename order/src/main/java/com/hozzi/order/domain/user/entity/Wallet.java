@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @Table(schema = "root", name = "wallets")
 public class Wallet {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long walletId;
     @Column(nullable = false)
     private State state;

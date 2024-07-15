@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Table(schema = "root", name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
     @Column(nullable = false)
     private Gender gender;

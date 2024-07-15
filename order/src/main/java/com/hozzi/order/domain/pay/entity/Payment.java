@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Table(schema = "root", name = "payments")
 public class Payment {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paymentId;
     @Column(nullable = false)
     private String paymentName;

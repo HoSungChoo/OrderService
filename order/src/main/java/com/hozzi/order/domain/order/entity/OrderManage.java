@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Table(schema = "root", name = "order_manage")
 public class OrderManage {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderManageId;
     @Column(nullable = false)
     private OmType omType;

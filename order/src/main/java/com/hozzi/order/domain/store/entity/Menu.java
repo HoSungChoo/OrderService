@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Table(schema = "root", name = "menu")
 public class Menu {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long menuId;
     @Column(nullable = false)
     private String menuName;
