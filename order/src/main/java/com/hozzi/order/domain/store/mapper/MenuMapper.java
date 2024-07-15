@@ -10,7 +10,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(componentModel = "spring", imports = {Store.class},unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", imports = {Store.class, Menu.class},unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface MenuMapper {
     CreateMenuOutDTO toCreateMenuOutDTO(Menu menu);
     UpdateMenuOutDTO toUpdateMenuOutDTO(Menu menu);
