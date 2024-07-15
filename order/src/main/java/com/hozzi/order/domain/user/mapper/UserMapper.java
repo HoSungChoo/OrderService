@@ -11,7 +11,6 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserMapper {
-    UserMapper userMapper = Mappers.getMapper(UserMapper.class);
     ReadUserOutDTO toReadUserOutDTO(User user);
     UpdateUserOutDTO toUpdateUserOutDTO(User user);
     DeleteUserOutDTO toDeleteUserOutDTO(User user);
